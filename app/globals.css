@@ -260,7 +260,7 @@ h1, h2, h3 { font-family: var(--display); line-height: 1.1; margin: 0; }
 .page .section { padding-left: 0; padding-right: 0; }
 .page-title { font-size: clamp(2rem, 6vw, 4rem); font-weight: 800; margin-bottom: 2rem; }
 .prose { max-width: 40rem; font-size: 1.15rem; }
-.prose p { margin: 0 0 1.3rem; }
+.prose p { margin: 0 0 1.3rem; white-space: pre-line; }
 .about-grid { display: grid; grid-template-columns: 1fr minmax(0, 380px); gap: 3rem; align-items: start; }
 .about-img { border-radius: 6px; border: 1px solid var(--line); width: 100%; }
 
