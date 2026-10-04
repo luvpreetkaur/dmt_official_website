@@ -20,7 +20,7 @@ export default function Gallery({ items }) {
                 <video src={g.url} controls preload="metadata" playsInline />
               )
             ) : (
-              <img src={g.url} alt={g.caption || 'DMT moment'} loading="lazy" />
+              <img src={g.url} alt={g.caption || 'Divyah Moments of Trance'} loading="lazy" />
             )}
             {g.caption && <figcaption>{g.caption}</figcaption>}
           </figure>

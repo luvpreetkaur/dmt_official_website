@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import HeroStage from './HeroStage';
 import Flyer from './Flyer';
 import FloatingObjects from './FloatingObjects';
@@ -43,14 +42,13 @@ export default function EventHero({ event, presenter, fallbackTicket }) {
               {lineup.map((n) => <li key={n}>{n}</li>)}
             </ul>
           )}
-          <div className="eh-actions">
-            {ticket && (
+          {ticket && (
+            <div className="eh-actions">
               <a className="btn btn-primary" href={ticket} target="_blank" rel="noopener noreferrer">
                 Get tickets
               </a>
-            )}
-            <Link className="btn btn-ghost" href="/events">All events</Link>
-          </div>
+            </div>
+          )}
         </div>
       </div>
     </HeroStage>

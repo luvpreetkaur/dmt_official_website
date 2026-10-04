@@ -205,7 +205,9 @@ h1, h2, h3 { font-family: var(--display); line-height: 1.1; margin: 0; }
   position: absolute; width: min(115vmin, 980px); height: auto; opacity: 0.45; z-index: -2;
   transform: translate3d(calc(var(--px) * 14px), calc(var(--py) * 14px), 0); transition: transform 0.6s cubic-bezier(.2, .7, .2, 1);
 }
+.ab-hero-full { min-height: calc(100svh - 60px); }
 .ab-hero-text { padding: 2rem 1.25rem; max-width: 60rem; }
+.ab-sub { color: var(--bone); font-size: clamp(1.05rem, 2.4vw, 1.4rem); margin: 1.4rem auto 2.2rem; max-width: 36rem; text-shadow: 0 0 16px var(--void); }
 .ab-title {
   font-weight: 800; font-size: clamp(2.4rem, 7.5vw, 5.6rem); line-height: 1.02;
   background: linear-gradient(100deg, #fff 0%, #ffe3b0 25%, var(--amber) 40%, var(--magenta) 65%, var(--cyan) 100%);
@@ -214,12 +216,6 @@ h1, h2, h3 { font-family: var(--display); line-height: 1.1; margin: 0; }
   filter: drop-shadow(0 0 28px rgba(255, 61, 154, 0.45));
   animation: ab-shimmer 9s ease-in-out infinite alternate;
 }
-.ab-initials { display: flex; justify-content: center; gap: clamp(1rem, 4vw, 2.4rem); margin: 1.6rem 0 0; font-family: var(--display); font-weight: 600; font-size: clamp(1.1rem, 2.6vw, 1.6rem); }
-.ab-initials span {
-  color: var(--cyan); text-shadow: 0 0 18px rgba(41, 240, 224, 0.8);
-  animation: ab-pulse 3.2s ease-in-out calc(var(--i) * 0.4s) infinite;
-}
-.ab-initials span + span::before { content: '·'; color: var(--mute); margin-right: clamp(1rem, 4vw, 2.4rem); text-shadow: none; }
 .ab-cue {
   position: absolute; bottom: 1.6rem; left: 50%; width: 22px; height: 22px; translate: -50% 0;
   border-right: 2px solid var(--bone); border-bottom: 2px solid var(--bone); opacity: 0.6;
@@ -378,7 +374,7 @@ h1, h2, h3 { font-family: var(--display); line-height: 1.1; margin: 0; }
   .m-spin-a, .m-spin-b, .m-spin-c { animation: none; }
   .eh-obj, .eh-light, .eh-beams, .eh-halo, .eh-bob, .eh-glare { animation: none; }
   .eh-card, .eh-layer { transition: none; }
-  .ab-sun, .ab-title, .ab-hl, .ab-word, .ab-initials span, .ab-cue { animation: none; }
+  .ab-sun, .ab-title, .ab-hl, .ab-word, .ab-cue { animation: none; }
   .ab-mandala { transition: none; }
   html { scroll-behavior: auto; }
   .btn { transition: none; }

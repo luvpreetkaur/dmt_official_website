@@ -2,7 +2,7 @@ import './globals.css';
 
 export const metadata = {
   title: 'Divyah Moments of Trance',
-  description: 'Psytrance events in India by Divyah Moments of Trance (DMT).',
+  description: 'Psytrance events in India by Divyah Moments of Trance.',
 };
 
 export default function RootLayout({ children }) {
