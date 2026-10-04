@@ -4,6 +4,7 @@ export default function Nav() {
   return (
     <header className="nav">
       <nav className="nav-links" aria-label="Main">
+        <Link href="/">Home</Link>
         <Link href="/#events">Events</Link>
         <Link href="/#lineup">Lineup</Link>
         <Link href="/#gallery">Gallery</Link>
