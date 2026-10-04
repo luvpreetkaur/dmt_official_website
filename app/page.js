@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import Mandala from '@/components/Mandala';
-import EventFeature from '@/components/EventFeature';
+import EventHero from '@/components/EventHero';
 import EventRow from '@/components/EventRow';
 import PastEvents from '@/components/PastEvents';
 import Lineup from '@/components/Lineup';
@@ -24,31 +24,34 @@ export default async function Home() {
         <p className="demo-banner">Preview content. Connect Supabase and edit from /admin to go live.</p>
       )}
       <main>
-        <section className="hero">
-          <Mandala />
-          <div className="hero-glow" aria-hidden="true" />
-          <div className="hero-text">
-            <h1>{s.hero_title}</h1>
-            <p>{s.hero_tagline}</p>
-            <Link className="btn btn-primary" href="/#events">{s.hero_cta_label}</Link>
-          </div>
-        </section>
+        {next ? (
+          <EventHero event={next} presenter={s.hero_title} fallbackTicket={s.ticket_url} />
+        ) : (
+          <>
+            <section className="hero">
+              <Mandala />
+              <div className="hero-glow" aria-hidden="true" />
+              <div className="hero-text">
+                <h1>{s.hero_title}</h1>
+                <p>{s.hero_tagline}</p>
+                <Link className="btn btn-primary" href="/#events">{s.hero_cta_label}</Link>
+              </div>
+            </section>
+            <section id="events" className="section">
+              <h2>Upcoming events</h2>
+              <p className="empty">No events announced yet. Follow us for the next drop.</p>
+            </section>
+          </>
+        )}
 
-        <section id="events" className="section">
-          <h2>Upcoming events</h2>
-          {next ? (
-            <>
-              <EventFeature event={next} fallbackTicket={s.ticket_url} />
-              {later.length > 0 && (
-                <ul className="rows">
-                  {later.map((e) => <EventRow key={e.id} event={e} fallbackTicket={s.ticket_url} />)}
-                </ul>
-              )}
-            </>
-          ) : (
-            <p className="empty">No events announced yet. Follow us for the next drop.</p>
-          )}
-        </section>
+        {later.length > 0 && (
+          <section className="section">
+            <h2>More upcoming</h2>
+            <ul className="rows">
+              {later.map((e) => <EventRow key={e.id} event={e} fallbackTicket={s.ticket_url} />)}
+            </ul>
+          </section>
+        )}
 
         {artists.length > 0 && (
           <section id="lineup" className="section">
