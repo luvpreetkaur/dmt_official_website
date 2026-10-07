@@ -477,7 +477,7 @@ main > .section + .section::before {
 @media (max-width: 560px) {
   .nav { padding: 0.7rem 1rem; }
   .nav-links { gap: 0.95rem; font-size: 0.95rem; }
-  .nav-links a[href="/"] { display: none; } /* the logo already links home */
+  .nav:has(.logo3d) .nav-links a[href="/"] { display: none; } /* the logo already links home */
   .logo3d-sm { --sz: 36px; }
 }
 
