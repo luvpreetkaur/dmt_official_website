@@ -1,6 +1,7 @@
 import Mandala from './Mandala';
 import HeroStage from './HeroStage';
 import FloatingObjects from './FloatingObjects';
+import Logo from './Logo';
 
 // Kept to the edges so the centred title stays clear.
 const HERO_OBJECTS = [
@@ -17,7 +18,7 @@ const HERO_OBJECTS = [
 ];
 
 // Sunrise + mandala + floating objects hero shared by the home and about pages.
-export default function ThemedHero({ eyebrow, title, subtitle, full = false, children }) {
+export default function ThemedHero({ eyebrow, title, subtitle, full = false, logo = false, children }) {
   return (
     <HeroStage className={`ab-hero${full ? ' ab-hero-full' : ''}`}>
       <div className="ab-sun" aria-hidden="true" />
@@ -27,6 +28,7 @@ export default function ThemedHero({ eyebrow, title, subtitle, full = false, chi
       <Mandala className="ab-mandala" />
       <FloatingObjects objects={HERO_OBJECTS} />
       <div className="ab-hero-text">
+        {logo && <Logo size="lg" />}
         {eyebrow && <p className="eh-eyebrow">{eyebrow}</p>}
         <h1 className="ab-title">{title}</h1>
         {subtitle && <p className="ab-sub">{subtitle}</p>}

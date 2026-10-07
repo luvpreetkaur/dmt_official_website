@@ -1,11 +1,11 @@
 import HeroStage from './HeroStage';
 import Flyer from './Flyer';
 import FloatingObjects from './FloatingObjects';
+import LineupChips from './LineupChips';
 import { fmtFull } from '@/lib/data';
 
-export default function EventHero({ event, presenter, fallbackTicket }) {
+export default function EventHero({ event, presenter, fallbackTicket, artists }) {
   const ticket = event.ticket_url || fallbackTicket;
-  const lineup = (event.lineup || '').split(',').map((x) => x.trim()).filter(Boolean);
   const where = [event.venue, event.city].filter(Boolean).join(', ');
 
   return (
@@ -37,11 +37,7 @@ export default function EventHero({ event, presenter, fallbackTicket }) {
           <h1 className="eh-title">{event.title}</h1>
           {where && <p className="eh-where">{where}</p>}
           {event.description && <p className="eh-desc">{event.description}</p>}
-          {lineup.length > 0 && (
-            <ul className="chips eh-chips" aria-label="Lineup">
-              {lineup.map((n) => <li key={n}>{n}</li>)}
-            </ul>
-          )}
+          <LineupChips lineup={event.lineup} artists={artists} className="eh-chips" />
           {ticket && (
             <div className="eh-actions">
               <a className="btn btn-primary" href={ticket} target="_blank" rel="noopener noreferrer">

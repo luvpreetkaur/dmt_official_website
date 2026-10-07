@@ -9,13 +9,13 @@ export const revalidate = 30;
 export const metadata = { title: 'Events | Divyah Moments of Trance' };
 
 export default async function EventsPage() {
-  const { settings: s, events } = await getSiteData();
+  const { settings: s, events, artists } = await getSiteData();
   const { upcoming, past } = splitEvents(events);
   const [next, ...later] = upcoming;
   return (
     <>
       <Nav />
-      {next && <EventHero event={next} presenter={s.hero_title} fallbackTicket={s.ticket_url} />}
+      {next && <EventHero event={next} presenter={s.hero_title} fallbackTicket={s.ticket_url} artists={artists} />}
       <main className="page">
         {!next && (
           <>
@@ -27,7 +27,7 @@ export default async function EventsPage() {
           <section className="section">
             <h2>More upcoming</h2>
             <div className="stack">
-              {later.map((e) => <EventFeature key={e.id} event={e} fallbackTicket={s.ticket_url} />)}
+              {later.map((e) => <EventFeature key={e.id} event={e} fallbackTicket={s.ticket_url} artists={artists} />)}
             </div>
           </section>
         )}

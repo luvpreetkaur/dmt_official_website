@@ -16,7 +16,10 @@ export default function RootLayout({ children }) {
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <div className="trip-bg" aria-hidden="true"><span /><span /><span /></div>
+        {children}
+      </body>
     </html>
   );
 }

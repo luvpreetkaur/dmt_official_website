@@ -19,7 +19,7 @@ export default async function Home() {
         <p className="demo-banner">Preview content. Connect Supabase and edit from /admin to go live.</p>
       )}
       <main>
-        <ThemedHero title={s.hero_title} subtitle={s.hero_tagline} full>
+        <ThemedHero title={s.hero_title} subtitle={s.hero_tagline} full logo>
           <Link className="btn btn-primary" href="/events">{s.hero_cta_label}</Link>
         </ThemedHero>
 
