@@ -1,6 +1,6 @@
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
-import EventHero from '@/components/EventHero';
+import FlyerExperience from '@/components/FlyerExperience';
 import EventFeature from '@/components/EventFeature';
 import PastEvents from '@/components/PastEvents';
 import { getSiteData, splitEvents } from '@/lib/data';
@@ -15,7 +15,7 @@ export default async function EventsPage() {
   return (
     <>
       <Nav />
-      {next && <EventHero event={next} presenter={s.hero_title} fallbackTicket={s.ticket_url} artists={artists} />}
+      {next && <FlyerExperience event={next} presenter={s.hero_title} fallbackTicket={s.ticket_url} artists={artists} />}
       <main className="page">
         {!next && (
           <>

@@ -35,7 +35,7 @@ export default async function AboutPage() {
     <>
       <Nav />
       <main className="about-page">
-        <ThemedHero eyebrow={s.about_title} title={name} />
+        <ThemedHero eyebrow={s.about_title} title={name} logo />
 
         <Reveal className="ab-body">
           {lead && (
