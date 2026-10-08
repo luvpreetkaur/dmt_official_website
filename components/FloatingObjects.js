@@ -95,10 +95,11 @@ function hrefFor(o) {
   return `#eh-${o.k}-${o.c}`;
 }
 
-export default function FloatingObjects({ objects = FLYER_OBJECTS }) {
+// Pass sprites={false} when another FloatingObjects on the page already defines them.
+export default function FloatingObjects({ objects = FLYER_OBJECTS, sprites = true }) {
   return (
     <>
-      <Sprites />
+      {sprites && <Sprites />}
       {['far', 'near'].map((layer) => (
         <div key={layer} className={`eh-layer eh-layer-${layer}`} aria-hidden="true">
           {objects.filter((o) => (layer === 'far') === !!o.far).map((o, i) => (

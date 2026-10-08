@@ -24,7 +24,7 @@ export default async function Home() {
         <section className="section about-teaser">
           <h2>{s.about_title}</h2>
           <p>{aboutTeaser}</p>
-          <Link className="btn btn-ghost" href="/about">Read more</Link>
+          <Link className="btn btn-ghost" href="/about">Dive deep</Link>
         </section>
       </main>
       <Footer settings={s} />
