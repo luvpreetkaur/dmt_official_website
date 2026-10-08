@@ -346,6 +346,7 @@ h1, h2, h3 { font-family: var(--display); line-height: 1.1; margin: 0; }
 .gallery-item { margin: 0 0 1rem; break-inside: avoid; }
 .gallery-item img, .gallery-item video { width: 100%; border-radius: 6px; border: 1px solid var(--line); }
 .gallery-item iframe { width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 6px; }
+.gallery-item .ig-embed { aspect-ratio: auto; height: 640px; background: #fff; border-radius: 12px; box-shadow: 0 0 40px rgba(123, 44, 255, 0.35); }
 .gallery-item figcaption { color: var(--mute); font-size: 0.9rem; margin-top: 0.4rem; }
 
 /* About + inner pages */
@@ -462,8 +463,13 @@ main > .section + .section::before {
 /* Media melts into colour on hover */
 .gallery-item img, .gallery-item video, .past-card .flyer, .artist img, .artist-ph { transition: filter 0.6s, transform 0.6s, box-shadow 0.6s; }
 .gallery-item:hover img, .gallery-item:hover video { filter: saturate(1.6) hue-rotate(25deg); transform: scale(1.02); box-shadow: 0 0 40px rgba(255, 61, 154, 0.35); }
-.artist-ph { background: conic-gradient(from 0deg, var(--uv), var(--magenta), var(--amber), var(--cyan), var(--uv)); animation: spin-hue 12s linear infinite; }
-@keyframes spin-hue { to { filter: hue-rotate(360deg); } }
+.artist-ph { position: relative; overflow: hidden; isolation: isolate; background: var(--deep); }
+.artist-ph::before {
+  content: ''; position: absolute; inset: -20%; z-index: -1;
+  background: conic-gradient(from 0deg, var(--uv), var(--magenta), var(--amber), var(--magenta), var(--uv), var(--cyan), var(--uv));
+  opacity: 0.85; animation: spin 14s linear infinite;
+}
+.artist-ph { text-shadow: 0 0 18px rgba(12, 6, 32, 0.8); }
 
 /* Footer glow */
 .footer { border-top: 0; position: relative; }
@@ -483,7 +489,7 @@ main > .section + .section::before {
 
 @media (prefers-reduced-motion: reduce) {
   .trip-bg span, .section h2, .page-title, .btn-primary, .logo3d-ring, .logo3d-coin, .logo3d-glare, .logo3d-lg::before,
-  main > .section + .section::before, .artist-ph, .footer-name { animation: none; }
+  main > .section + .section::before, .artist-ph::before, .footer-name { animation: none; }
   .ab-hero .logo3d-lg, .nav-links a::after { transition: none; }
 }
 
