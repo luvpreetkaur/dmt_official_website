@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
-import ThemedHero from '@/components/ThemedHero';
 import Transmissions from '@/components/Transmissions';
 import { getSiteData } from '@/lib/data';
 
@@ -14,8 +13,8 @@ export default async function AboutPage() {
     <>
       <Nav />
       <main className="tx">
-        <ThemedHero eyebrow={s.about_title} title={s.hero_title || 'Divyah Moments of Trance'} logo />
-        <Transmissions />
+        <h1 className="sr-only">Dive Deep</h1>
+        <Transmissions logo />
         <p className="ab-cta">
           <Link className="btn btn-primary" href="/events">Upcoming events</Link>
         </p>
