@@ -516,13 +516,27 @@ main > .section + .section::before {
   .fx-ch-r { animation: fx-split-r 4.3s ease-in-out infinite; translate: calc(var(--px) * -7px) calc(var(--py) * -4px); }
   .fx-ch-b { animation: fx-split-b 4.3s ease-in-out infinite; translate: calc(var(--px) * 7px) calc(var(--py) * 4px); }
 }
-/* Portrait screens (phones): show the whole flyer edge to edge, no pan */
+/* Portrait screens (phones): the flyer fills the full height; scrolling swings the
+   camera centre -> right -> centre -> left so the cropped sides still get seen */
 @media (max-aspect-ratio: 3/4) {
-  .fx-stage { height: auto; }
-  .fx-sticky { position: relative; height: calc(100svh - 56px); min-height: calc(100vw * 4 / 3); display: grid; align-items: center; }
-  .fx-full { position: relative; inset: auto; width: 100%; aspect-ratio: 3 / 4; transform: none; }
-  .fx-img { object-position: 50% 50%; }
+  .fx-stage { height: 220svh; }
+  .fx-full { inset: -2%; }
+  .fx-img { object-position: calc(var(--sp) * 100%) 50%; }
+  @supports (width: calc(sin(1deg) * 1px)) {
+    .fx-img { object-position: calc(50% + sin(var(--sp) * 360deg) * 50%) 50%; }
+  }
 }
+/* Touch screens: no mouse, so the colour split and camera move on their own */
+@media (hover: none) and (prefers-reduced-motion: no-preference) {
+  .fx-liquid > .fx-img:first-child { opacity: 0; }
+  .fx-ch { opacity: 1; }
+  .fx-ch-r { animation: fx-split-r 3.6s ease-in-out infinite, fx-drift-r 7s ease-in-out infinite alternate; }
+  .fx-ch-b { animation: fx-split-b 3.6s ease-in-out infinite, fx-drift-b 7s ease-in-out infinite alternate; }
+  .fx-full { animation: fx-sway 11s ease-in-out infinite alternate; }
+}
+@keyframes fx-drift-r { from { translate: -3px 1px; } to { translate: 2px -2px; } }
+@keyframes fx-drift-b { from { translate: 3px -1px; } to { translate: -2px 2px; } }
+@keyframes fx-sway { from { translate: -6px 0; rotate: -0.6deg; scale: 1; } to { translate: 6px -4px; rotate: 0.6deg; scale: 1.035; } }
 .fx-float-ticket { position: absolute; right: clamp(1rem, 4vw, 3rem); bottom: clamp(1.2rem, 4vh, 2.5rem); z-index: 2; }
 
 .fx-info { max-width: 1100px; margin: 0 auto; padding: clamp(3rem, 8vw, 6rem) clamp(1rem, 4vw, 3rem) 2rem; display: grid; gap: clamp(4rem, 10vw, 7rem); }
@@ -613,7 +627,7 @@ main > .section + .section::before {
 }
 @media (prefers-reduced-motion: reduce) {
   .fx-bg, .fx-title, .fx-lineup-h, .tx-kaleido, .tx-tunnel span, .tx-q, .tx-ch, .tx-big p { animation: none; }
-  .fx-full { transition: none; }
+  .fx-full { transition: none; animation: none; }
   .tx-tunnel span { opacity: 0.3; transform: scale(calc(var(--k, 1) * 1)); }
 }
 
