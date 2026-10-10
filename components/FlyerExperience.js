@@ -1,5 +1,5 @@
 import HeroStage from './HeroStage';
-import FloatingObjects from './FloatingObjects';
+import FloatingObjects, { EVENT_OBJECTS } from './FloatingObjects';
 import Reveal from './Reveal';
 import ArtistSpotlight from './ArtistSpotlight';
 import { fmtFull } from '@/lib/data';
@@ -50,7 +50,7 @@ export default function FlyerExperience({ event, presenter, fallbackTicket, arti
             <div className="fx-full flyer-ph" role="img" aria-label={event.title} />
           )}
           <div className="eh-beams" aria-hidden="true" />
-          <FloatingObjects />
+          <FloatingObjects objects={EVENT_OBJECTS} />
           <div className="fx-vignette" aria-hidden="true" />
           {ticket && (
             <a className="btn btn-primary fx-float-ticket" href={ticket} target="_blank" rel="noopener noreferrer">
