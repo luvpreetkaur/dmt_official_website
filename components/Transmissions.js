@@ -1,18 +1,9 @@
 import { Fragment } from 'react';
 import Reveal from './Reveal';
 import Mandala from './Mandala';
-import FloatingObjects from './FloatingObjects';
+import FloatingObjects, { NATURE_SPACE } from './FloatingObjects';
 import Logo from './Logo';
 import { TRANSMISSIONS } from '@/lib/transmissions';
-
-const OBJECTS = [
-  { k: 'gem', x: 6, y: 18, s: 46, d: 13, r: -16, c: 'cool' },
-  { k: 'orb', x: 90, y: 24, s: 52, d: 14, r: 0, c: 'hot' },
-  { k: 'mush', x: 8, y: 78, s: 50, d: 15, r: -6, c: 'hot', far: true },
-  { k: 'diamond', x: 88, y: 76, s: 40, d: 12, r: 12, c: 'cool', far: true },
-  { k: 'spark', x: 20, y: 40, s: 18, d: 4, r: 0 },
-  { k: 'spark', x: 78, y: 52, s: 16, d: 5, r: 0 },
-];
 
 // Every letter of the question floats on its own phase.
 export function Wavy({ text }) {
@@ -39,7 +30,7 @@ export default function Transmissions({ logo = false }) {
             <div className="tx-kaleido" />
             <div className="tx-tunnel"><span /><span /><span /><span /></div>
             <Mandala className="tx-mandala" />
-            <FloatingObjects objects={OBJECTS} sprites={ti === 0} />
+            <FloatingObjects objects={NATURE_SPACE} sprites={ti === 0} />
           </div>
 
           <div className="tx-title">

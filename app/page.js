@@ -21,7 +21,7 @@ export default async function Home() {
         <p className="demo-banner">Preview content. Connect Supabase and edit from /admin to go live.</p>
       )}
       <main>
-        <HomeHero title={s.hero_title} tagline={s.hero_tagline} cta={s.hero_cta_label} />
+        <HomeHero title={s.hero_title} cta={s.hero_cta_label} />
 
         <section className="hh-bands" aria-label="What we stand for">
           <Marquee items={BAND_A} className="mq-a" />
@@ -29,10 +29,10 @@ export default async function Home() {
         </section>
 
         <Reveal className="hh-statement">
-          <p className="hh-st-line reveal">D.M.T. was not created in a boardroom.</p>
-          <p className="hh-st-line hh-st-big reveal" style={{ '--i': 1 }}>It was born on the dancefloor.</p>
+          <p className="hh-st-line reveal">We were not created in a boardroom.</p>
+          <p className="hh-st-line hh-st-big reveal" style={{ '--i': 1 }}>We were born on the dancefloor.</p>
           <p className="reveal" style={{ '--i': 2 }}>
-            <Link className="btn btn-primary hh-btn" href="/about">Dive deep</Link>
+            <Link className="btn btn-primary hh-btn" href="/about">Our story</Link>
           </p>
         </Reveal>
       </main>

@@ -5,7 +5,7 @@ import Transmissions from '@/components/Transmissions';
 import { getSiteData } from '@/lib/data';
 
 export const revalidate = 30;
-export const metadata = { title: 'Dive Deep | Divyah Moments of Trance' };
+export const metadata = { title: 'Our Story | Divyah Moments of Trance' };
 
 export default async function AboutPage() {
   const { settings: s } = await getSiteData();
@@ -13,7 +13,7 @@ export default async function AboutPage() {
     <>
       <Nav />
       <main className="tx">
-        <h1 className="sr-only">Dive Deep</h1>
+        <h1 className="sr-only">Our Story</h1>
         <Transmissions logo />
         <p className="ab-cta">
           <Link className="btn btn-primary" href="/events">Upcoming events</Link>

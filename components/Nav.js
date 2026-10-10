@@ -10,7 +10,7 @@ export default function Nav() {
       <nav className="nav-links" aria-label="Main">
         <Link href="/">Home</Link>
         <Link href="/events">Events</Link>
-        <Link href="/about">Dive Deep</Link>
+        <Link href="/about">Our Story</Link>
       </nav>
     </header>
   );
