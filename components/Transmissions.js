@@ -2,8 +2,6 @@ import { Fragment } from 'react';
 import Reveal from './Reveal';
 import Mandala from './Mandala';
 import Scene from './Scene';
-import Halo from './Halo';
-import Logo from './Logo';
 import { TRANSMISSIONS } from '@/lib/transmissions';
 
 // Every letter of the question floats on its own phase.
@@ -21,8 +19,7 @@ export function Wavy({ text }) {
 }
 
 // Full-screen chapters built from the words in the @dmt.india reels.
-// logo: show the 3D logo above the first question.
-export default function Transmissions({ logo = false }) {
+export default function Transmissions() {
   return (
     <>
       {TRANSMISSIONS.map((t, ti) => (
@@ -35,12 +32,6 @@ export default function Transmissions({ logo = false }) {
           </div>
 
           <div className="tx-title">
-            {logo && ti === 0 && (
-              <span className="tx-logo">
-                <Halo />
-                <Logo size="lg" />
-              </span>
-            )}
             <h2 id={`tx-${t.id}`} className="tx-q" data-text={t.question}><Wavy text={t.question} /></h2>
             <span className="ab-cue" aria-hidden="true" />
           </div>

@@ -2,7 +2,6 @@ import Link from 'next/link';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import HomeHero from '@/components/HomeHero';
-import LogoFlight from '@/components/LogoFlight';
 import Marquee from '@/components/Marquee';
 import Reveal from '@/components/Reveal';
 import { getSiteData } from '@/lib/data';
@@ -18,7 +17,6 @@ export default async function Home() {
   return (
     <>
       <Nav home />
-      <LogoFlight />
       {demo && (
         <p className="demo-banner">Preview content. Connect Supabase and edit from /admin to go live.</p>
       )}

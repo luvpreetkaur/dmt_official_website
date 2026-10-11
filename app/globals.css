@@ -13,9 +13,11 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: clip; }
+:root { --nav-h: 76px; }
+@media (max-width: 560px) { :root { --nav-h: 66px; } }
 body {
-  margin: 0;
+  margin: 0; overflow-x: clip;
   background:
     radial-gradient(1200px 700px at 85% -10%, rgba(123, 44, 255, 0.28), transparent 60%),
     radial-gradient(900px 600px at -10% 40%, rgba(255, 61, 154, 0.12), transparent 60%),
@@ -34,9 +36,9 @@ h1, h2, h3 { font-family: var(--display); line-height: 1.1; margin: 0; }
 
 /* Nav */
 .nav {
-  position: sticky; top: 0; z-index: 20;
+  position: sticky; top: 0; z-index: 20; height: var(--nav-h); box-sizing: border-box;
   display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-  padding: 0.9rem clamp(1rem, 4vw, 3rem);
+  padding: 0 clamp(1rem, 4vw, 3rem);
   background: linear-gradient(to bottom, rgba(12, 6, 32, 0.92), rgba(12, 6, 32, 0.55));
   backdrop-filter: blur(8px);
 }
@@ -48,7 +50,7 @@ h1, h2, h3 { font-family: var(--display); line-height: 1.1; margin: 0; }
 
 /* Hero */
 .hero {
-  position: relative; min-height: calc(100svh - 60px);
+  position: relative; min-height: calc(100svh - var(--nav-h));
   display: grid; place-items: center; overflow: hidden; isolation: isolate;
 }
 .mandala { position: absolute; width: min(135vmin, 1150px); height: auto; opacity: 0.95; z-index: -1; }
@@ -72,7 +74,7 @@ h1, h2, h3 { font-family: var(--display); line-height: 1.1; margin: 0; }
 /* Event hero: next event as a full-screen 3D stage */
 .event-hero {
   --px: 0; --py: 0;
-  position: relative; min-height: calc(100svh - 60px); overflow: hidden; isolation: isolate;
+  position: relative; min-height: calc(100svh - var(--nav-h)); overflow: hidden; isolation: isolate;
   display: grid; align-items: center;
 }
 .eh-backdrop {
@@ -182,7 +184,7 @@ h1, h2, h3 { font-family: var(--display); line-height: 1.1; margin: 0; }
   position: absolute; width: min(115vmin, 980px); height: auto; opacity: 0.45; z-index: -2;
   transform: translate3d(calc(var(--px) * 14px), calc(var(--py) * 14px), 0); transition: transform 0.6s cubic-bezier(.2, .7, .2, 1);
 }
-.ab-hero-full { min-height: calc(100svh - 60px); }
+.ab-hero-full { min-height: calc(100svh - var(--nav-h)); }
 .ab-hero-text { padding: 2rem 1.25rem; max-width: 60rem; }
 .ab-sub { color: var(--bone); font-size: clamp(1.05rem, 2.4vw, 1.4rem); margin: 1.4rem auto 2.2rem; max-width: 36rem; text-shadow: 0 0 16px var(--void); }
 .ab-title {
@@ -459,7 +461,7 @@ main > .section + .section::before {
 
 /* ---------- Events: the flyer as a full-screen trip ---------- */
 .fx-stage { --px: 0; --py: 0; --sp: 0; position: relative; height: 260svh; }
-.fx-sticky { position: sticky; top: 0; height: 100svh; overflow: hidden; isolation: isolate; }
+.fx-sticky { position: sticky; top: var(--nav-h); height: calc(100svh - var(--nav-h)); overflow: hidden; isolation: isolate; }
 .fx-bg {
   position: absolute; inset: -8%; width: 116%; height: 116%; max-width: none; object-fit: cover; z-index: -4;
   filter: blur(26px) saturate(1.8) brightness(0.7); animation: fx-bg-drift 30s ease-in-out infinite alternate;
@@ -496,13 +498,16 @@ main > .section + .section::before {
 }
 /* Portrait screens (phones): the flyer fills the full height; scrolling swings the
    camera centre -> right -> centre -> left so the cropped sides still get seen */
+/* Portrait screens (phones): the whole flyer at its true 3:4 shape, nothing
+   cropped, with the ticket button and scroll cue right below it */
 @media (max-aspect-ratio: 3/4) {
-  .fx-stage { height: 175svh; }
-  .fx-full { inset: 3vh 4vw 4vh; border-radius: 18px; }
-  .fx-img { object-position: calc(var(--sp) * 100%) 50%; }
-  @supports (width: calc(sin(1deg) * 1px)) {
-    .fx-img { object-position: calc(50% + sin(var(--sp) * 360deg) * 50%) 50%; }
+  .fx-stage { height: auto; }
+  .fx-sticky {
+    position: relative; top: auto; height: auto; min-height: calc(100svh - var(--nav-h));
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; padding: 1rem 1rem 1.4rem;
   }
+  .fx-full { position: relative; inset: auto; width: min(100%, calc((100svh - var(--nav-h) - 9rem) * 0.75)); aspect-ratio: 3 / 4; border-radius: 16px; transform: none; }
+  .fx-img { object-position: 50% 50%; }
 }
 /* Touch screens: no mouse, so the colour split and camera move on their own */
 @media (hover: none) and (prefers-reduced-motion: no-preference) {
@@ -510,22 +515,22 @@ main > .section + .section::before {
   .fx-ch { opacity: 1; }
   .fx-ch-r { animation: fx-split-r 3.6s ease-in-out infinite, fx-drift-r 7s ease-in-out infinite alternate; }
   .fx-ch-b { animation: fx-split-b 3.6s ease-in-out infinite, fx-drift-b 7s ease-in-out infinite alternate; }
-  .fx-full { animation: fx-sway 11s ease-in-out infinite alternate; }
+  .fx-full { animation: fx-float 8s ease-in-out infinite; }
 }
 @keyframes fx-drift-r { from { translate: -3px 1px; } to { translate: 2px -2px; } }
 @keyframes fx-drift-b { from { translate: 3px -1px; } to { translate: -2px 2px; } }
-@keyframes fx-sway { from { translate: -6px 0; rotate: -0.6deg; scale: 1; } to { translate: 6px -4px; rotate: 0.6deg; scale: 1.035; } }
+@keyframes fx-float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -6px; } }
 /* phones: a clear cue that the page continues below the flyer */
 .fx-more { display: none; }
 @media (max-width: 760px) {
   .fx-stage .ab-cue { display: none; }
   .fx-more {
-    position: absolute; left: 50%; bottom: 1rem; translate: -50% 0; z-index: 3; white-space: nowrap;
+    position: relative; z-index: 3; white-space: nowrap;
     display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.6rem 1.1rem; border-radius: 999px;
     color: #fff; text-decoration: none; font-weight: 600; font-size: 0.85rem;
     background: rgba(12, 6, 32, 0.78); border: 2px solid transparent;
     background-clip: padding-box; box-shadow: 0 0 0 2px var(--cyan), 0 0 22px rgba(41, 240, 224, 0.55);
-    opacity: calc(1 - var(--sp) * 3); animation: fx-more-glow 1.714s ease-in-out infinite;
+    animation: fx-more-glow 1.714s ease-in-out infinite;
   }
   .fx-more-arrows { position: relative; width: 14px; height: 18px; }
   .fx-more-arrows span {
@@ -621,7 +626,7 @@ main > .section + .section::before {
 }
 
 @media (max-width: 760px) {
-  .fx-float-ticket { left: 50%; right: auto; translate: -50% 0; bottom: 4.4rem; }
+  .fx-float-ticket { position: relative; left: auto; right: auto; bottom: auto; translate: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .fx-bg, .fx-title, .fx-lineup-h, .tx-kaleido, .tx-tunnel span, .tx-q, .tx-ch, .tx-big p { animation: none; }
@@ -737,7 +742,7 @@ main > .section + .section::before {
 }
 
 /* ---------- Homepage: tunnel hero, ticker bands, statement ---------- */
-.hh { --px: 0; --py: 0; position: relative; min-height: calc(100svh - 60px); overflow: hidden; isolation: isolate; display: grid; place-items: center; text-align: center; }
+.hh { --px: 0; --py: 0; position: relative; min-height: calc(100svh - var(--nav-h)); overflow: hidden; isolation: isolate; display: grid; place-items: center; text-align: center; }
 .hh-bg { position: absolute; inset: 0; z-index: -3; overflow: hidden; }
 .hh-bg .tx-kaleido { opacity: 0.4; animation-duration: 40s; }
 .hh-bg .tx-tunnel span { animation-duration: 6s; }
@@ -888,8 +893,6 @@ main > .section + .section::before {
 /* the logo floats on its own with the halo orbiting it */
 .hh-logo { position: relative; display: inline-grid; place-items: center; }
 .hh-logo .logo3d-lg { margin-bottom: 0; --sz: clamp(180px, 22vw, 250px); animation: hh-thump 0.857s ease-out infinite; }
-.tx-logo { position: relative; display: inline-grid; place-items: center; margin: 0 auto 2.2rem; justify-self: center; width: max-content; }
-.tx-logo .logo3d-lg { margin-bottom: 0; }
 
 .lotus { width: 0; height: 0; isolation: isolate; }
 .petal {
@@ -1003,7 +1006,7 @@ main > .section + .section::before {
 }
 
 /* ---------- Artistic stage: UV-lit, lasers, beat portal, reflection ---------- */
-.st { position: relative; text-align: center; }
+.st { position: relative; text-align: center; overflow-x: clip; }
 .st-head { position: relative; z-index: 2; margin-bottom: clamp(1rem, 4vw, 2.5rem); }
 .st-title {
   font-weight: 800; font-size: clamp(2.2rem, 7vw, 5rem); line-height: 1; margin: 0.4rem 0 1rem;
@@ -1103,7 +1106,14 @@ main > .section + .section::before {
 .nav-home-ghost { visibility: hidden; pointer-events: none; }
 /* the logo copy flying from the centre to the corner */
 .logo-flyer { position: fixed; z-index: 100; margin: 0; pointer-events: none; transform-origin: 50% 50%; will-change: transform; }
-.logo-flying .hh-logo { visibility: hidden; }
+.logo-flying .hh-logo, .logo-landing .hh-logo { visibility: hidden; }
+@media (max-width: 560px) {
+  .hh-content { padding-top: 3rem; }
+  .hh-logo .logo3d-lg { --sz: 150px; }
+  .hh-beat { width: 150px; }
+}
+.logo-landed .hh-logo { animation: logo-arrive 0.5s ease-out; }
+@keyframes logo-arrive { from { scale: 0.9; filter: brightness(1.8); } to { scale: 1; filter: none; } }
 
 /* Admin */
 .admin { max-width: 880px; margin: 0 auto; padding: 2rem 1rem 4rem; }

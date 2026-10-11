@@ -1,11 +1,13 @@
 import Link from 'next/link';
 import Logo from './Logo';
+import LogoFlight from './LogoFlight';
 
 // home: the big centre logo stands in for the corner one (which keeps its
 // spot invisibly so the logo can fly there when leaving the page).
 export default function Nav({ home = false }) {
   return (
     <header className="nav">
+      <LogoFlight home={home} />
       <Link href="/" className={`nav-home${home ? ' nav-home-ghost' : ''}`} aria-label="Divyah Moments of Trance, home" tabIndex={home ? -1 : undefined}>
         <Logo />
       </Link>

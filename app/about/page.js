@@ -14,7 +14,7 @@ export default async function AboutPage() {
       <Nav />
       <main className="tx">
         <h1 className="sr-only">Our Story</h1>
-        <Transmissions logo />
+        <Transmissions />
         <p className="ab-cta">
           <Link className="btn btn-primary" href="/events">Upcoming events</Link>
         </p>
