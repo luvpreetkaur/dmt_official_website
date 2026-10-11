@@ -3,7 +3,6 @@ import HeroStage from './HeroStage';
 import Mandala from './Mandala';
 import Scene from './Scene';
 import Halo from './Halo';
-import { Bloom } from './Lotus';
 import Logo from './Logo';
 import { Wavy } from './Transmissions';
 
@@ -22,13 +21,13 @@ export default function HomeHero({ title, cta }) {
       <Scene />
 
       <div className="hh-content">
-        <Bloom>
+        <div className="hh-logo">
           <span className="hh-beat" aria-hidden="true" />
           <span className="hh-beat" aria-hidden="true" />
           <span className="hh-beat" aria-hidden="true" />
           <Halo />
           <Logo size="lg" />
-        </Bloom>
+        </div>
         <h1 className="hh-title tx-q"><Wavy text={title} /></h1>
         <div className="hh-ctas">
           <Link className="btn btn-primary hh-btn" href="/events">{cta}</Link>

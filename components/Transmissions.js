@@ -3,7 +3,6 @@ import Reveal from './Reveal';
 import Mandala from './Mandala';
 import Scene from './Scene';
 import Halo from './Halo';
-import { Bloom } from './Lotus';
 import Logo from './Logo';
 import { TRANSMISSIONS } from '@/lib/transmissions';
 
@@ -37,10 +36,10 @@ export default function Transmissions({ logo = false }) {
 
           <div className="tx-title">
             {logo && ti === 0 && (
-              <Bloom>
+              <span className="tx-logo">
                 <Halo />
                 <Logo size="lg" />
-              </Bloom>
+              </span>
             )}
             <h2 id={`tx-${t.id}`} className="tx-q" data-text={t.question}><Wavy text={t.question} /></h2>
             <span className="ab-cue" aria-hidden="true" />

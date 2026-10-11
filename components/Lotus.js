@@ -22,14 +22,3 @@ export default function Lotus({ className = '' }) {
   );
 }
 
-// The logo rising from the lotus heart: lotus, then the logo, then a copy of
-// the lotus clipped to its front petals so they overlap the logo's base.
-export function Bloom({ children }) {
-  return (
-    <div className="bloom">
-      <div className="bloom-layer"><Lotus /></div>
-      <div className="bloom-seed">{children}</div>
-      <div className="bloom-layer bloom-front" aria-hidden="true"><Lotus /></div>
-    </div>
-  );
-}

@@ -1,7 +1,9 @@
 // The site's living backdrop: reflective water in true perspective with
-// beat ripples, floating diyas and lily pads, sky lanterns rising slowly,
+// beat ripples and a 3D lotus blooming on it, sky lanterns rising slowly,
 // drifting 3D lotus petals, twinkling stars and fireflies pulled into the
-// portal. The lotus itself lives with the logo (see Lotus.js).
+// portal.
+
+import Lotus from './Lotus';
 
 const TAU = Math.PI * 2;
 const f = (n) => n.toFixed(1);
@@ -25,13 +27,6 @@ function curl(ex, ey, tangent, r0, dir, turns = 1.7) {
 }
 
 /* ---------- reflective water with floating diyas and lily pads ---------- */
-// Things floating on the water, placed in screen space so they render the
-// same everywhere: [left %, depth 0 (horizon) .. 1 (near), drift px].
-const DIYAS = [[30, 0.2, 40], [66, 0.15, 30], [44, 0.45, -35], [80, 0.4, -25], [16, 0.55, 30], [58, 0.75, 45], [90, 0.7, -30], [8, 0.3, 25]];
-const PADS = [[38, 0.3, 0], [72, 0.55, 1], [24, 0.8, 1], [52, 0.12, 0], [86, 0.18, 0], [12, 0.62, 1]];
-
-const place = (x, d) => ({ left: `${x}%`, bottom: `${(1 - d) * 62 + 4}%`, '--sc': 0.35 + d * 0.95 });
-
 function Water() {
   return (
     <div className="water-wrap">
@@ -39,26 +34,6 @@ function Water() {
         {[0, 1, 2, 3].map((i) => <span key={i} className="ripple" style={{ '--k': i }} />)}
         <span className="water-shine" />
       </div>
-    </div>
-  );
-}
-
-function Floaters() {
-  return (
-    <div className="floaters">
-      {PADS.map(([x, d, bud], i) => (
-        <span key={`p${i}`} className="lily" style={{ ...place(x, d), '--k': i, zIndex: Math.round(d * 10) }}>
-          <span className="lily-pad" />
-          {bud ? <span className="lily-bud" /> : null}
-        </span>
-      ))}
-      {DIYAS.map(([x, d, drift], i) => (
-        <span key={`d${i}`} className="diya" style={{ ...place(x, d), '--drift': `${drift}px`, '--k': i, zIndex: Math.round(d * 10) + 1 }}>
-          <span className="diya-glow" />
-          <span className="diya-flame" />
-          <span className="diya-bowl" />
-        </span>
-      ))}
     </div>
   );
 }
@@ -136,7 +111,7 @@ export default function Scene({ portal = true }) {
       <Sky />
       <Lanterns />
       <Water />
-      <Floaters />
+      {portal && <Lotus className="lotus-water" />}
       <Petals />
       <div className="sc-flies">
         {FIREFLIES.map((p, i) => (
