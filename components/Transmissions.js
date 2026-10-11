@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import Reveal from './Reveal';
 import Mandala from './Mandala';
-import FloatingObjects, { NATURE_SPACE } from './FloatingObjects';
+import Scene from './Scene';
 import Logo from './Logo';
 import { TRANSMISSIONS } from '@/lib/transmissions';
 
@@ -30,7 +30,7 @@ export default function Transmissions({ logo = false }) {
             <div className="tx-kaleido" />
             <div className="tx-tunnel"><span /><span /><span /><span /></div>
             <Mandala className="tx-mandala" />
-            <FloatingObjects objects={NATURE_SPACE} sprites={ti === 0} />
+            <Scene />
           </div>
 
           <div className="tx-title">

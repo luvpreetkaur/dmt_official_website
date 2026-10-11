@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import HeroStage from './HeroStage';
 import Mandala from './Mandala';
-import FloatingObjects, { NATURE_SPACE } from './FloatingObjects';
+import Scene from './Scene';
 import Logo from './Logo';
 import { Wavy } from './Transmissions';
 
@@ -17,7 +17,7 @@ export default function HomeHero({ title, cta }) {
         <Mandala className="hh-mandala" />
         <div className="hh-spot" />
       </div>
-      <FloatingObjects objects={NATURE_SPACE} />
+      <Scene />
 
       <div className="hh-content">
         <div className="hh-logo">
