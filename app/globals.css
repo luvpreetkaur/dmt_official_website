@@ -446,7 +446,6 @@ main > .section + .section::before {
 @media (max-width: 560px) {
   .nav { padding: 0.7rem 1rem; }
   .nav-links { gap: 0.95rem; font-size: 0.95rem; }
-  .nav:has(.logo3d) .nav-links a[href="/"] { display: none; } /* the logo already links home */
   .logo3d-sm { --sz: 36px; }
 }
 
@@ -854,13 +853,12 @@ main > .section + .section::before {
 @media (max-width: 760px) {
 }
 @media (prefers-reduced-motion: reduce) {
-  .sc-star, .sc-spiral, .lotus-stage, .lotus-aura, .lotus-img, .lotus::before, .ripple, .water-shine, .halo-ring, .lanterns span { animation: none; }
+  .sc-star, .sc-spiral, .lotus-aura, .ripple, .water-shine, .halo-ring, .lanterns span { animation: none; }
   .petals { display: none; }
   .sc-flies { display: none; }
 }
 
-/* ---------- Divine 3D lotus (the logo rises from it), water, diyas, lanterns ---------- */
-@property --open { syntax: '<angle>'; inherits: true; initial-value: 0deg; }
+/* ---------- Lotus on the water, reflective water, lanterns, petals, halo ---------- */
 
 /* the lotus blooming on the water */
 .lotus-water { --u: 1.6; position: absolute; left: 50%; bottom: 6%; z-index: 2; }
@@ -871,66 +869,30 @@ main > .section + .section::before {
 .tx-logo { position: relative; display: inline-grid; place-items: center; margin: 0 auto 2.2rem; justify-self: center; width: max-content; }
 .tx-logo .logo3d-lg { margin-bottom: 0; }
 
-.lotus { width: 0; height: 0; perspective: 900px; }
-.lotus-stage {
-  position: absolute; transform-style: preserve-3d; transform: rotateX(66deg) rotateZ(0deg);
-  animation: lotus-breathe 4.3s ease-in-out infinite alternate;
-}
-@media (hover: hover) and (min-width: 761px) {
-  .lotus-stage { animation: lotus-turn 60s linear infinite, lotus-breathe 4.3s ease-in-out infinite alternate; }
-}
+.lotus { width: 0; height: 0; isolation: isolate; }
 .petal {
   position: absolute; width: calc(var(--w) * 1px * var(--u)); height: calc(var(--h) * 1px * var(--u));
   left: calc(var(--w) * -0.5px * var(--u)); top: calc(var(--h) * -1px * var(--u));
-  transform-origin: 50% 100%; transform: rotateZ(var(--rot)) translateZ(var(--z)) rotateX(calc(-1 * (var(--tilt) + var(--open))));
+  transform-origin: 50% 100%;
   border-radius: 50% 50% 50% 50% / 92% 92% 8% 8%; border: 2px solid rgba(12, 6, 32, 0.5);
   box-shadow: inset 0 0 18px rgba(255, 255, 255, 0.55), 0 0 22px var(--glow, rgba(255, 61, 154, 0.6));
-  backface-visibility: visible; -webkit-backface-visibility: visible;
 }
 .petal-outer { --glow: rgba(123, 44, 255, 0.7); background: linear-gradient(to top, #3b1a8f, #7B2CFF 30%, #FF3D9A 72%, #ffe0f0); }
 .petal-mid { --glow: rgba(255, 61, 154, 0.7); background: linear-gradient(to top, #c2187a, #FF3D9A 35%, #FFB020 75%, #fff4d6); }
 .petal-inner { --glow: rgba(255, 176, 32, 0.8); background: linear-gradient(to top, #ff7a1a, #FFB020 45%, #fffbe8); }
 .lotus-aura {
-  position: absolute; width: calc(380px * var(--u)); height: calc(380px * var(--u)); left: calc(-190px * var(--u)); top: calc(-190px * var(--u));
-  border-radius: 50%; background: radial-gradient(circle, rgba(255, 220, 140, 0.55), rgba(255, 61, 154, 0.25) 40%, transparent 68%);
-  transform: translateZ(-2px); animation: lotus-aura 0.857s ease-out infinite;
+  position: absolute; z-index: 0; width: calc(400px * var(--u)); height: calc(180px * var(--u)); left: calc(-200px * var(--u)); top: calc(-110px * var(--u));
+  border-radius: 50%; background: radial-gradient(ellipse, rgba(255, 220, 140, 0.55), rgba(255, 61, 154, 0.25) 40%, transparent 68%);
+  animation: lotus-aura 0.857s ease-out infinite;
 }
 .lotus-core {
   position: absolute; width: calc(56px * var(--u)); height: calc(56px * var(--u)); left: calc(-28px * var(--u)); top: calc(-56px * var(--u));
-  border-radius: 50%; transform-origin: 50% 100%; transform: rotateX(-66deg);
+  border-radius: 50%; z-index: 1000;
   background: radial-gradient(circle at 40% 35%, #fff, #fff4b0 30%, #FFB020 60%, #ff7a1a);
   box-shadow: 0 0 30px 10px rgba(255, 220, 120, 0.8);
 }
-@keyframes lotus-turn { to { transform: rotateX(66deg) rotateZ(360deg); } }
-@keyframes lotus-breathe { from { --open: -6deg; } to { --open: 10deg; } }
 @keyframes lotus-aura { 0% { opacity: 1; } 60%, 100% { opacity: 0.55; } }
 
-/* phones / touch screens: the still lotus image breathes in 2D instead */
-.lotus-img {
-  display: none; position: absolute; max-width: none; width: calc(319px * var(--u));
-  left: calc(-159.5px * var(--u)); top: calc(-100.5px * var(--u));
-  transform-origin: 50% 75%; filter: drop-shadow(0 0 16px rgba(255, 61, 154, 0.55)) drop-shadow(0 0 40px rgba(255, 176, 32, 0.35));
-  animation: lotus-img-breathe 4.3s ease-in-out infinite alternate;
-}
-@keyframes lotus-img-breathe { from { transform: scale(0.97); } to { transform: scale(1.04); } }
-@media (hover: none), (max-width: 760px) {
-  .lotus-stage { display: none; }
-  .lotus-img { display: block; }
-  .lotus::before {
-    content: ''; position: absolute; width: calc(300px * var(--u)); height: calc(140px * var(--u)); left: calc(-150px * var(--u)); top: calc(-90px * var(--u));
-    border-radius: 50%; background: radial-gradient(ellipse, rgba(255, 220, 140, 0.45), rgba(255, 61, 154, 0.2) 45%, transparent 70%);
-    animation: lotus-aura 0.857s ease-out infinite;
-  }
-  /* halo rings as flat tilted ellipses: same look, no crossing 3D planes */
-  .halo { transform-style: flat; }
-  .halo-r1 { animation-name: halo2d-a; }
-  .halo-r2 { animation-name: halo2d-b; }
-  .halo-r3 { animation-name: halo2d-c; }
-}
-@keyframes halo2d-a { from { transform: rotate(-10deg) scaleY(0.3) rotate(0deg); } to { transform: rotate(-10deg) scaleY(0.3) rotate(360deg); } }
-@keyframes halo2d-b { from { transform: rotate(62deg) scaleY(0.32) rotate(0deg); } to { transform: rotate(62deg) scaleY(0.32) rotate(-360deg); } }
-@keyframes halo2d-c { from { transform: rotate(-58deg) scaleY(0.36) rotate(0deg); } to { transform: rotate(-58deg) scaleY(0.36) rotate(360deg); } }
-@media (prefers-reduced-motion: reduce) { .lotus-img, .lotus::before { animation: none; } }
 
 /* reflective water in true perspective, rippling on the beat */
 .water-wrap {
@@ -991,9 +953,9 @@ main > .section + .section::before {
 }
 
 /* divine gyroscope halo around the logo */
-.halo { position: absolute; left: 50%; top: 50%; width: 175%; aspect-ratio: 1; translate: -50% -50%; transform-style: preserve-3d; pointer-events: none; }
+.halo { position: absolute; left: 50%; top: 50%; width: 175%; aspect-ratio: 1; translate: -50% -50%; pointer-events: none; }
 .halo-ring {
-  position: absolute; inset: 0; border-radius: 50%; transform-style: preserve-3d;
+  position: absolute; inset: 0; border-radius: 50%;
   border: 4px solid; border-color: var(--a, #FF3D9A) #FFB020 var(--b, #29F0E0) #fff4b0;
   box-shadow: 0 0 26px rgba(255, 176, 32, 0.7), inset 0 0 26px rgba(41, 240, 224, 0.55);
 }
@@ -1004,9 +966,10 @@ main > .section + .section::before {
 .halo-r1 { animation: halo-a 7s linear infinite; }
 .halo-r2 { inset: 7%; animation: halo-b 9s linear infinite; }
 .halo-r3 { inset: 14%; animation: halo-c 11s linear infinite; }
-@keyframes halo-a { from { transform: rotateX(72deg) rotateZ(0deg); } to { transform: rotateX(72deg) rotateZ(360deg); } }
-@keyframes halo-b { from { transform: rotateY(70deg) rotateZ(0deg); } to { transform: rotateY(70deg) rotateZ(-360deg); } }
-@keyframes halo-c { from { transform: rotateX(55deg) rotateY(-45deg) rotateZ(0deg); } to { transform: rotateX(55deg) rotateY(-45deg) rotateZ(360deg); } }
+/* drawn as flat tilted ellipses (no crossing 3D planes), identical on every device */
+@keyframes halo-a { from { transform: rotate(-10deg) scaleY(0.3) rotate(0deg); } to { transform: rotate(-10deg) scaleY(0.3) rotate(360deg); } }
+@keyframes halo-b { from { transform: rotate(62deg) scaleY(0.32) rotate(0deg); } to { transform: rotate(62deg) scaleY(0.32) rotate(-360deg); } }
+@keyframes halo-c { from { transform: rotate(-58deg) scaleY(0.36) rotate(0deg); } to { transform: rotate(-58deg) scaleY(0.36) rotate(360deg); } }
 
 .tx-bg .lotus-water { --u: 1.1; bottom: 8%; opacity: 0.9; }
 .tx-bg .water-wrap { height: 26%; opacity: 0.85; }
@@ -1015,7 +978,6 @@ main > .section + .section::before {
   .water-wrap { height: 28%; }
   .lotus-water { --u: 1; bottom: 9%; }
   .tx-bg .lotus-water { --u: 0.8; }
-  .lanterns span:nth-child(n+7) { display: none; }
 }
 
 /* Admin */
