@@ -2,6 +2,7 @@ import HeroStage from './HeroStage';
 import Scene from './Scene';
 import Reveal from './Reveal';
 import ArtistSpotlight from './ArtistSpotlight';
+import StageShowcase from './StageShowcase';
 import { fmtFull } from '@/lib/data';
 
 // Splits an image into R, G and B copies so they can drift apart (chromatic
@@ -74,6 +75,8 @@ export default function FlyerExperience({ event, presenter, fallbackTicket, arti
             </p>
           )}
         </section>
+
+        {event.stage_url && <StageShowcase src={event.stage_url} credit={event.stage_credit} note={event.stage_note} />}
 
         {lineup.length > 0 && (
           <section className="fx-lineup" aria-labelledby="fx-lineup-h">
