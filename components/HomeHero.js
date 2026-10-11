@@ -2,6 +2,7 @@ import Link from 'next/link';
 import HeroStage from './HeroStage';
 import Mandala from './Mandala';
 import Scene from './Scene';
+import Halo from './Halo';
 import Logo from './Logo';
 import { Wavy } from './Transmissions';
 
@@ -24,6 +25,7 @@ export default function HomeHero({ title, cta }) {
           <span className="hh-beat" aria-hidden="true" />
           <span className="hh-beat" aria-hidden="true" />
           <span className="hh-beat" aria-hidden="true" />
+          <Halo />
           <Logo size="lg" />
         </div>
         <h1 className="hh-title tx-q"><Wavy text={title} /></h1>

@@ -1,8 +1,8 @@
-// A pop-psychedelic landscape in the spirit of the Glow With The Flow flyer and
-// classic trippy paintings: bold dark outlines, echoing rainbow bands, melting
-// striped hills that flow, rainbow trees of life with spiral branches,
-// rainbow smoke and all-seeing eyes whose pupils follow the mouse.
-// Colours follow the page palette (--a/--b/--c) and glows share the beat.
+// The site's living backdrop, drawn in the spirit of the Glow With The Flow
+// flyer and trippy pop paintings: outlined rainbow smoke with all-seeing eyes
+// (pupils follow the mouse), a divine 3D lotus breathing open on a perspective
+// water surface with beat ripples, drifting 3D petals, twinkling stars and
+// fireflies pulled into the portal. Colours follow the page palette.
 
 const TAU = Math.PI * 2;
 const f = (n) => n.toFixed(1);
@@ -45,67 +45,6 @@ function Eye({ x, y, r, k = 0 }) {
   );
 }
 
-/* ---------- rainbow tree of life ---------- */
-const TRUNK = 'M150 905 C162 800 108 700 150 600 C188 512 140 430 176 350 C202 290 180 232 206 178';
-const BRANCHES = [
-  [150, 600, 86, 584, 58, 500, 26, -1, 15],
-  [158, 566, 238, 566, 304, 470, 30, 1, 15],
-  [166, 424, 92, 420, 60, 330, 23, -1, 12],
-  [176, 362, 268, 372, 334, 296, 27, 1, 12],
-  [194, 252, 132, 244, 108, 150, 20, -1, 10],
-  [200, 222, 290, 232, 322, 128, 24, 1, 10],
-  [206, 182, 240, 140, 232, 58, 17, 1, 8],
-];
-
-function Tree({ side }) {
-  const branches = BRANCHES.map(([sx, sy, qx, qy, ex, ey, r0, dir, w]) => {
-    const c = curl(ex, ey, Math.atan2(ey - qy, ex - qx), r0, dir);
-    return { d: `M${sx} ${sy} Q${qx} ${qy} ${ex} ${ey}${c.d}`, w, cx: c.cx, cy: c.cy, r0 };
-  });
-  const strokes = (extra) => (
-    <>
-      <path d={TRUNK} strokeWidth={34 + extra} />
-      <path d="M150 905 C130 880 100 884 76 902 M150 905 C172 878 206 880 230 902" strokeWidth={14 + extra} />
-      {branches.map((b, i) => <path key={i} d={b.d} strokeWidth={b.w + extra} />)}
-    </>
-  );
-  const leaves = branches.flatMap((b, i) =>
-    [0, 1, 2, 3, 4, 5].map((k) => {
-      const a = (k / 6) * TAU + i * 0.7;
-      const r = b.r0 * 1.55 + (k % 2) * 10;
-      return { x: b.cx + r * Math.cos(a), y: b.cy + r * Math.sin(a), s: 7 + ((i + k) % 3) * 3, c: RAINBOW[(i + k) % RAINBOW.length], k: i * 6 + k };
-    }),
-  );
-  return (
-    <div className={`sc-tree sc-tree-${side}`}>
-      <svg className="sc-tree-glow" viewBox="0 0 420 920" preserveAspectRatio="xMidYMax meet">
-        <g className="sc-glow-g" fill="none" strokeLinecap="round">{strokes(26)}</g>
-      </svg>
-      <svg className="sc-tree-body" viewBox="0 0 420 920" preserveAspectRatio="xMidYMax meet">
-        <defs>
-          <linearGradient id={`sc-bark-${side}`} x1="0" y1="1" x2="0" y2="0">
-            {RAINBOW.map((c, i) => <stop key={c} offset={i / (RAINBOW.length - 1)} stopColor={RAINBOW[RAINBOW.length - 1 - i]} />)}
-          </linearGradient>
-        </defs>
-        {/* echo outlines, dark ink line, then the rainbow wood */}
-        <g fill="none" strokeLinecap="round" strokeLinejoin="round">
-          <g className="sc-echo">{strokes(18)}</g>
-          <g stroke={INK}>{strokes(8)}</g>
-          <g stroke={`url(#sc-bark-${side})`}>{strokes(0)}</g>
-          <g stroke="#fff" strokeOpacity=".45" strokeWidth="2.5" transform="translate(-4 -3)">
-            {branches.map((b, i) => <path key={i} d={b.d} />)}
-          </g>
-        </g>
-        <Eye x={152} y={700} r={13} k={0} />
-        <Eye x={178} y={470} r={10} k={1} />
-        {leaves.map((p) => (
-          <circle key={p.k} className="sc-leaf" cx={f(p.x)} cy={f(p.y)} r={p.s} fill={p.c} stroke={INK} strokeWidth="3" style={{ '--k': p.k }} />
-        ))}
-      </svg>
-    </div>
-  );
-}
-
 /* ---------- rainbow smoke with eyes ---------- */
 function cloud(cx, cy, rx, ry, bumps, phase) {
   let d = '';
@@ -132,40 +71,54 @@ function Smoke({ side }) {
   );
 }
 
-/* ---------- melting rainbow hills that flow ---------- */
-// Each band is a wave twice the screen width that slides sideways forever.
-function wave(base, amp, period, phase, amp2) {
-  let d = '';
-  for (let x = 0; x <= 3200; x += 20) {
-    const y = base + amp * Math.sin((TAU * x) / period + phase) + amp2 * Math.sin((TAU * x) / 800 + phase * 2);
-    d += `${x ? 'L' : 'M'}${x} ${f(y)}`;
-  }
-  return d;
-}
-const BANDS = [
-  { c: '#7B2CFF', base: 70, amp: 16, period: 400, t: 46 },
-  { c: '#29F0E0', base: 120, amp: 18, period: 320, t: 38 },
-  { c: '#b6ff3b', base: 170, amp: 14, period: 400, t: 32 },
-  { c: '#FFB020', base: 220, amp: 18, period: 320, t: 28 },
-  { c: '#ff7a1a', base: 268, amp: 15, period: 400, t: 24 },
-  { c: '#FF3D9A', base: 316, amp: 17, period: 320, t: 20 },
+/* ---------- divine 3D lotus on a perspective water surface ---------- */
+const LAYERS = [
+  { n: 14, tilt: 12, w: 70, h: 150, cls: 'outer', off: 0 },
+  { n: 12, tilt: 34, w: 62, h: 124, cls: 'mid', off: 15 },
+  { n: 9, tilt: 58, w: 50, h: 88, cls: 'inner', off: 0 },
 ];
 
-function Hills() {
+function Lotus() {
   return (
-    <div className="sc-hills">
-      {BANDS.map((b, i) => {
-        const line = wave(b.base, b.amp, b.period, i * 1.3, 6);
-        return (
-          <svg key={b.c} className="sc-band" viewBox="0 0 3200 400" preserveAspectRatio="none"
-            style={{ '--t': `${b.t}s`, '--dir': i % 2 ? 'reverse' : 'normal' }}>
-            <path d={`${line}V400H0Z`} fill={b.c} />
-            <path d={line} fill="none" stroke={INK} strokeWidth="5" vectorEffect="non-scaling-stroke" />
-            <path d={line} fill="none" stroke="#fff" strokeOpacity=".5" strokeWidth="2" vectorEffect="non-scaling-stroke" transform="translate(0 7)" />
-          </svg>
-        );
-      })}
-      <div className="sc-hills-fade" />
+    <div className="lotus">
+      <div className="lotus-stage">
+        {LAYERS.flatMap((L) =>
+          Array.from({ length: L.n }, (_, i) => (
+            <span key={`${L.cls}${i}`} className={`petal petal-${L.cls}`}
+              style={{ '--rot': `${(i * 360) / L.n + L.off}deg`, '--tilt': `${L.tilt}deg`, '--w': L.w, '--h': L.h }} />
+          )),
+        )}
+        <span className="lotus-core" />
+      </div>
+    </div>
+  );
+}
+
+function Water() {
+  return (
+    <div className="water-wrap">
+      <div className="water">
+        {[0, 1, 2, 3].map((i) => <span key={i} className="ripple" style={{ '--k': i }} />)}
+        <span className="water-shine" />
+      </div>
+    </div>
+  );
+}
+
+const PETALS = Array.from({ length: 14 }, (_, i) => ({
+  x: (i * 29 + 7) % 100,
+  dx: ((i % 5) - 2) * 6,
+  d: 11 + (i % 4) * 2.5,
+  dl: -((i * 1.9) % 13),
+  c: RAINBOW[i % RAINBOW.length],
+}));
+
+function Petals() {
+  return (
+    <div className="petals">
+      {PETALS.map((p, i) => (
+        <span key={i} style={{ '--x': `${p.x}%`, '--dx': `${p.dx}vw`, '--d': `${p.d}s`, '--dl': `${p.dl}s`, '--c': p.c }} />
+      ))}
     </div>
   );
 }
@@ -192,7 +145,7 @@ function Sky() {
   );
 }
 
-const FIREFLIES = Array.from({ length: 18 }, (_, i) => ({
+const FIREFLIES = Array.from({ length: 12 }, (_, i) => ({
   x: (i * 37 + 11) % 100,
   d: 7 + (i % 5) * 1.6,
   dl: -((i * 1.3) % 9),
@@ -202,15 +155,16 @@ const FIREFLIES = Array.from({ length: 18 }, (_, i) => ({
 
 // portal: fireflies get pulled into the centre (homepage, Our Story);
 // without it they simply rise (events page, where the flyer is the centre).
-export default function Scene({ portal = true }) {
+// lotus: the 3D lotus blooming on the water (left out where the flyer sits).
+export default function Scene({ portal = true, lotus = true }) {
   return (
     <div className={`sc${portal ? ' sc-portal' : ''}`} aria-hidden="true">
       <Sky />
       <Smoke side="l" />
       <Smoke side="r" />
-      <Hills />
-      <Tree side="l" />
-      <Tree side="r" />
+      <Water />
+      {lotus && <Lotus />}
+      <Petals />
       <div className="sc-flies">
         {FIREFLIES.map((p, i) => (
           <span key={i} style={{ '--x': `${p.x}%`, '--d': `${p.d}s`, '--dl': `${p.dl}s`, '--s': `${p.s}px`, '--c': p.c }} />

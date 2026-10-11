@@ -50,7 +50,7 @@ export default function FlyerExperience({ event, presenter, fallbackTicket, arti
             <div className="fx-full flyer-ph" role="img" aria-label={event.title} />
           )}
           <div className="eh-beams" aria-hidden="true" />
-          <Scene portal={false} />
+          <Scene portal={false} lotus={false} />
           <div className="fx-vignette" aria-hidden="true" />
           {ticket && (
             <a className="btn btn-primary fx-float-ticket" href={ticket} target="_blank" rel="noopener noreferrer">
