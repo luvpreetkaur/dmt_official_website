@@ -59,11 +59,15 @@ export default function FlyerExperience({ event, presenter, fallbackTicket, arti
             </a>
           )}
           <span className="ab-cue" aria-hidden="true" />
+          <a className="fx-more" href="#event-details">
+            Scroll for the stage, lineup &amp; more
+            <span className="fx-more-arrows" aria-hidden="true"><span /><span /></span>
+          </a>
         </div>
       </HeroStage>
 
       <Reveal className="fx-info">
-        <section className="fx-details">
+        <section className="fx-details" id="event-details">
           {presenter && <p className="eh-eyebrow reveal">{presenter} presents</p>}
           <h1 className="fx-title reveal">{event.title}</h1>
           <p className="fx-when reveal">{fmtFull(event.starts_at)}</p>

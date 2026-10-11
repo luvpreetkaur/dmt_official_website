@@ -388,7 +388,7 @@ h1, h2, h3 { font-family: var(--display); line-height: 1.1; margin: 0; }
 .btn-primary { background: linear-gradient(90deg, var(--magenta), var(--uv), var(--cyan), var(--magenta)); background-size: 300% 100%; animation: ab-flow 7s linear infinite; }
 
 /* 3D logo coin */
-.logo3d { --sz: 42px; position: relative; display: inline-grid; place-items: center; width: var(--sz); height: var(--sz); perspective: 600px; }
+.logo3d { --sz: 60px; position: relative; display: inline-grid; place-items: center; width: var(--sz); height: var(--sz); perspective: 600px; }
 .logo3d-lg { --sz: clamp(110px, 18vw, 170px); margin: 0 auto 1.6rem; }
 .logo3d-ring {
   position: absolute; inset: -8%; border-radius: 50%;
@@ -446,7 +446,7 @@ main > .section + .section::before {
 @media (max-width: 560px) {
   .nav { padding: 0.7rem 1rem; }
   .nav-links { gap: 0.95rem; font-size: 0.95rem; }
-  .logo3d-sm { --sz: 36px; }
+  .logo3d-sm { --sz: 50px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -497,7 +497,7 @@ main > .section + .section::before {
 /* Portrait screens (phones): the flyer fills the full height; scrolling swings the
    camera centre -> right -> centre -> left so the cropped sides still get seen */
 @media (max-aspect-ratio: 3/4) {
-  .fx-stage { height: 220svh; }
+  .fx-stage { height: 175svh; }
   .fx-full { inset: 3vh 4vw 4vh; border-radius: 18px; }
   .fx-img { object-position: calc(var(--sp) * 100%) 50%; }
   @supports (width: calc(sin(1deg) * 1px)) {
@@ -515,6 +515,28 @@ main > .section + .section::before {
 @keyframes fx-drift-r { from { translate: -3px 1px; } to { translate: 2px -2px; } }
 @keyframes fx-drift-b { from { translate: 3px -1px; } to { translate: -2px 2px; } }
 @keyframes fx-sway { from { translate: -6px 0; rotate: -0.6deg; scale: 1; } to { translate: 6px -4px; rotate: 0.6deg; scale: 1.035; } }
+/* phones: a clear cue that the page continues below the flyer */
+.fx-more { display: none; }
+@media (max-width: 760px) {
+  .fx-stage .ab-cue { display: none; }
+  .fx-more {
+    position: absolute; left: 50%; bottom: 1rem; translate: -50% 0; z-index: 3; white-space: nowrap;
+    display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.6rem 1.1rem; border-radius: 999px;
+    color: #fff; text-decoration: none; font-weight: 600; font-size: 0.85rem;
+    background: rgba(12, 6, 32, 0.78); border: 2px solid transparent;
+    background-clip: padding-box; box-shadow: 0 0 0 2px var(--cyan), 0 0 22px rgba(41, 240, 224, 0.55);
+    opacity: calc(1 - var(--sp) * 3); animation: fx-more-glow 1.714s ease-in-out infinite;
+  }
+  .fx-more-arrows { position: relative; width: 14px; height: 18px; }
+  .fx-more-arrows span {
+    position: absolute; left: 2px; width: 9px; height: 9px; border-right: 2px solid var(--cyan); border-bottom: 2px solid var(--cyan);
+    rotate: 45deg; animation: fx-more-arrow 1.2s ease-in-out infinite;
+  }
+  .fx-more-arrows span:nth-child(2) { top: 6px; animation-delay: 0.2s; }
+}
+@keyframes fx-more-arrow { 0%, 100% { opacity: 0.3; translate: 0 -2px; } 50% { opacity: 1; translate: 0 2px; } }
+@keyframes fx-more-glow { 0%, 100% { box-shadow: 0 0 0 2px var(--cyan), 0 0 14px rgba(41, 240, 224, 0.4); } 50% { box-shadow: 0 0 0 2px var(--magenta), 0 0 28px rgba(255, 61, 154, 0.6); } }
+@media (prefers-reduced-motion: reduce) { .fx-more, .fx-more-arrows span { animation: none; } }
 .fx-float-ticket { position: absolute; right: clamp(1rem, 4vw, 3rem); bottom: clamp(1.2rem, 4vh, 2.5rem); z-index: 2; }
 
 .fx-info { max-width: 1100px; margin: 0 auto; padding: clamp(3rem, 8vw, 6rem) clamp(1rem, 4vw, 3rem) 2rem; display: grid; gap: clamp(4rem, 10vw, 7rem); }
@@ -599,7 +621,7 @@ main > .section + .section::before {
 }
 
 @media (max-width: 760px) {
-  .fx-float-ticket { left: 50%; right: auto; translate: -50% 0; bottom: 3.6rem; }
+  .fx-float-ticket { left: 50%; right: auto; translate: -50% 0; bottom: 4.4rem; }
 }
 @media (prefers-reduced-motion: reduce) {
   .fx-bg, .fx-title, .fx-lineup-h, .tx-kaleido, .tx-tunnel span, .tx-q, .tx-ch, .tx-big p { animation: none; }
@@ -732,7 +754,7 @@ main > .section + .section::before {
 .hh::after { content: ''; position: absolute; inset: auto 0 0 0; height: 28%; z-index: -2; background: linear-gradient(to bottom, transparent, var(--void)); pointer-events: none; }
 .hh-content { position: relative; padding: 0 1.25rem clamp(9rem, 24vh, 15rem); max-width: 70rem; }
 .hh-beat {
-  position: absolute; left: 50%; top: 50%; width: clamp(120px, 15vw, 160px); aspect-ratio: 1; translate: -50% -50%; border-radius: 50%;
+  position: absolute; left: 50%; top: 50%; width: clamp(180px, 22vw, 250px); aspect-ratio: 1; translate: -50% -50%; border-radius: 50%;
   border: 2px solid var(--magenta); box-shadow: 0 0 24px var(--magenta), inset 0 0 18px var(--cyan);
   animation: hh-ripple 2.571s ease-out infinite; opacity: 0;
 }
@@ -865,7 +887,7 @@ main > .section + .section::before {
 
 /* the logo floats on its own with the halo orbiting it */
 .hh-logo { position: relative; display: inline-grid; place-items: center; }
-.hh-logo .logo3d-lg { margin-bottom: 0; --sz: clamp(120px, 15vw, 160px); animation: hh-thump 0.857s ease-out infinite; }
+.hh-logo .logo3d-lg { margin-bottom: 0; --sz: clamp(180px, 22vw, 250px); animation: hh-thump 0.857s ease-out infinite; }
 .tx-logo { position: relative; display: inline-grid; place-items: center; margin: 0 auto 2.2rem; justify-self: center; width: max-content; }
 .tx-logo .logo3d-lg { margin-bottom: 0; }
 
@@ -1076,6 +1098,12 @@ main > .section + .section::before {
 @media (prefers-reduced-motion: reduce) {
   .st-title, .st-stage, .st-art, .st-uv, .st-lasers span, .st-portal::before, .st-portal span, .st-reflect, .st-ripple, .st-fog span { animation: none; }
 }
+
+/* homepage: corner logo hidden (keeps its spot as the flight's landing point) */
+.nav-home-ghost { visibility: hidden; pointer-events: none; }
+/* the logo copy flying from the centre to the corner */
+.logo-flyer { position: fixed; z-index: 100; margin: 0; pointer-events: none; transform-origin: 50% 50%; will-change: transform; }
+.logo-flying .hh-logo { visibility: hidden; }
 
 /* Admin */
 .admin { max-width: 880px; margin: 0 auto; padding: 2rem 1rem 4rem; }
