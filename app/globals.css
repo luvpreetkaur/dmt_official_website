@@ -568,7 +568,6 @@ main > .section + .section::before {
 }
 
 .tx-title { position: relative; min-height: 100svh; display: grid; place-content: center; text-align: center; padding: 0 1rem; }
-.tx-title .logo3d-lg { margin-bottom: 2.2rem; }
 .tx-q {
   position: relative; font-weight: 800; text-transform: uppercase; line-height: 0.95;
   font-size: clamp(2.8rem, 11vw, 8.5rem); color: #fff;
@@ -732,17 +731,15 @@ main > .section + .section::before {
   transition: left 0.5s ease-out, top 0.5s ease-out;
 }
 .hh::after { content: ''; position: absolute; inset: auto 0 0 0; height: 28%; z-index: -2; background: linear-gradient(to bottom, transparent, var(--void)); pointer-events: none; }
-.hh-content { position: relative; padding: 0 1.25rem clamp(9rem, 24vh, 15rem); max-width: 70rem; }
-.hh-logo { position: relative; display: inline-grid; place-items: center; }
-.hh-logo .logo3d-lg { margin-bottom: 0; --sz: clamp(120px, 16vw, 170px); animation: hh-thump 0.857s ease-out infinite; }
+.hh-content { position: relative; padding: 0 1.25rem clamp(3rem, 9vh, 6rem); max-width: 70rem; }
 .hh-beat {
-  position: absolute; left: 50%; top: 50%; width: clamp(120px, 16vw, 170px); aspect-ratio: 1; translate: -50% -50%; border-radius: 50%;
+  position: absolute; left: 50%; top: 50%; width: var(--bsz); aspect-ratio: 1; translate: -50% -50%; border-radius: 50%;
   border: 2px solid var(--magenta); box-shadow: 0 0 24px var(--magenta), inset 0 0 18px var(--cyan);
   animation: hh-ripple 2.571s ease-out infinite; opacity: 0;
 }
 .hh-beat:nth-child(2) { animation-delay: 0.857s; border-color: var(--cyan); }
 .hh-beat:nth-child(3) { animation-delay: 1.714s; border-color: var(--amber); }
-.hh-title.tx-q { margin: 1.6rem 0 0; font-size: clamp(2.4rem, 6.4vw, 6rem); text-transform: none; line-height: 0.95; }
+.hh-title.tx-q { margin: 0.4rem 0 0; font-size: clamp(2.4rem, 6.4vw, 6rem); text-transform: none; line-height: 0.95; }
 .hh-ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-top: 2.6rem; }
 .hh-btn { padding: 1rem 2.2rem; font-size: 0.95rem; border: 3px solid #0c0620; box-shadow: 0 6px 0 #0c0620, 0 0 30px rgba(255, 61, 154, 0.45); }
 .hh-ctas .btn-ghost { border-color: #0c0620; color: #fff; }
@@ -805,7 +802,7 @@ main > .section + .section::before {
 @keyframes ig-twinkle { 0%, 100% { opacity: 0; transform: scale(0.4) rotate(0deg); } 50% { opacity: 1; transform: scale(1.2) rotate(90deg); } }
 
 @media (prefers-reduced-motion: reduce) {
-  .hh-logo .logo3d-lg, .hh-beat, .mq-track, .mq-star, .hh-st-big, .ig-ring, .ig-spark { animation: none; }
+  .hh-beat, .mq-track, .mq-star, .hh-st-big, .ig-ring, .ig-spark { animation: none; }
   .hh-beat { opacity: 0; }
   .ig-spark { opacity: 0.8; }
   .mq-track { flex-wrap: wrap; }
@@ -823,15 +820,7 @@ main > .section + .section::before {
 .fx-sticky .sc { z-index: -3; }
 
 
-/* eyes blink, and their pupils follow the mouse */
-.sc-eye { transform-box: fill-box; transform-origin: 50% 50%; animation: sc-blink 6s ease-in-out infinite; animation-delay: calc(var(--k) * -1.9s); }
-.sc-pupil { transform: translate(calc(var(--px, 0) * 4px), calc(var(--py, 0) * 3px)); transition: transform 0.4s ease-out; }
 
-/* rainbow smoke behind the trees */
-.sc-smoke { position: absolute; width: min(46vw, 640px); top: 22%; overflow: visible; z-index: 1; }
-.sc-smoke-l { left: -12%; }
-.sc-smoke-r { right: -12%; top: 32%; scale: -1 1; }
-.sc-puff { transform-box: fill-box; transform-origin: 50% 50%; animation: sc-billow 7s ease-in-out infinite alternate; animation-delay: calc(var(--k) * -1.1s); }
 
 
 /* sky: twinkling outlined stars and spinning spirals */
@@ -849,8 +838,6 @@ main > .section + .section::before {
 }
 .sc:not(.sc-portal) .sc-flies span { animation-name: sc-up; }
 
-@keyframes sc-blink { 0%, 46%, 52%, 100% { transform: scaleY(1); } 49% { transform: scaleY(0.08); } }
-@keyframes sc-billow { from { transform: scale(1, 1) rotate(-2deg); } to { transform: scale(1.05, 0.95) rotate(3deg); } }
 @keyframes sc-star { 0%, 100% { transform: scale(0.6) rotate(0deg); opacity: 0.6; } 50% { transform: scale(1.1) rotate(45deg); opacity: 1; } }
 @keyframes sc-rise {
   0% { left: var(--x); top: 100%; opacity: 0; transform: scale(1); }
@@ -865,70 +852,142 @@ main > .section + .section::before {
 }
 
 @media (max-width: 760px) {
-  .sc-smoke { width: 72vw; top: 14%; }
-  .sc-smoke-l { left: -34%; }
-  .sc-smoke-r { right: -34%; top: 26%; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .sc-eye, .sc-puff, .sc-star, .sc-spiral, .lotus-stage, .lotus-core, .ripple, .water-shine, .halo-ring { animation: none; }
+  .sc-star, .sc-spiral, .lotus-stage, .lotus-core, .lotus-aura, .ripple, .water-shine, .halo-ring, .diya-flame, .diya, .lily, .lanterns span { animation: none; }
   .petals { display: none; }
   .sc-flies { display: none; }
 }
 
-/* ---------- Divine 3D lotus, water, petals, halo ---------- */
+/* ---------- Divine 3D lotus (the logo rises from it), water, diyas, lanterns ---------- */
 @property --open { syntax: '<angle>'; inherits: true; initial-value: 0deg; }
-.lotus { --u: 1.6; position: absolute; left: 50%; bottom: 6%; width: 0; height: 0; perspective: 900px; z-index: 2; }
+
+/* bloom: the logo sitting in the lotus heart */
+.bloom {
+  --bsz: clamp(118px, 13vw, 156px); --u: 1.45;
+  position: relative; width: calc(var(--bsz) * 2.8); height: calc(var(--bsz) * 1.72); margin: 0 auto; max-width: 100%;
+}
+.bloom-layer { position: absolute; inset: 0; }
+.bloom-layer .lotus { position: absolute; left: 50%; top: calc(var(--bsz) * 1.32); }
+.bloom-front {
+  -webkit-mask-image: linear-gradient(to bottom, transparent calc(var(--bsz) * 1.2), #000 calc(var(--bsz) * 1.34));
+  mask-image: linear-gradient(to bottom, transparent calc(var(--bsz) * 1.2), #000 calc(var(--bsz) * 1.34));
+}
+.bloom-seed {
+  position: absolute; left: 50%; top: calc(var(--bsz) * 1.32); width: var(--bsz); height: var(--bsz);
+  translate: -50% calc(-100% + var(--bsz) * 0.26); display: grid; place-items: center;
+}
+.bloom-seed .logo3d-lg { --sz: var(--bsz); margin: 0; animation: hh-thump 0.857s ease-out infinite; }
+.bloom-seed .logo3d-coin { animation-name: logo-turn; }
+.bloom-seed .halo { width: 165%; }
+.bloom-seed .hh-beat { top: 50%; }
+.lotus { width: 0; height: 0; perspective: 900px; }
 .lotus-stage {
   position: absolute; transform-style: preserve-3d; transform: rotateX(66deg) rotateZ(0deg);
-  animation: lotus-turn 48s linear infinite, lotus-breathe 4.3s ease-in-out infinite alternate;
+  animation: lotus-breathe 4.3s ease-in-out infinite alternate;
+}
+@media (hover: hover) and (min-width: 761px) {
+  .lotus-stage { animation: lotus-turn 60s linear infinite, lotus-breathe 4.3s ease-in-out infinite alternate; }
 }
 .petal {
   position: absolute; width: calc(var(--w) * 1px * var(--u)); height: calc(var(--h) * 1px * var(--u));
   left: calc(var(--w) * -0.5px * var(--u)); top: calc(var(--h) * -1px * var(--u));
-  transform-origin: 50% 100%; transform: rotateZ(var(--rot)) rotateX(calc(-1 * (var(--tilt) + var(--open))));
-  border-radius: 50% 50% 50% 50% / 92% 92% 8% 8%; border: 2px solid rgba(12, 6, 32, 0.55);
-  box-shadow: inset 0 0 18px rgba(255, 255, 255, 0.55), 0 0 24px var(--glow, rgba(255, 61, 154, 0.6));
-  opacity: 0.94; backface-visibility: visible;
+  transform-origin: 50% 100%; transform: rotateZ(var(--rot)) translateZ(var(--z)) rotateX(calc(-1 * (var(--tilt) + var(--open))));
+  border-radius: 50% 50% 50% 50% / 92% 92% 8% 8%; border: 2px solid rgba(12, 6, 32, 0.5);
+  box-shadow: inset 0 0 18px rgba(255, 255, 255, 0.55), 0 0 22px var(--glow, rgba(255, 61, 154, 0.6));
+  backface-visibility: visible; -webkit-backface-visibility: visible;
 }
 .petal-outer { --glow: rgba(123, 44, 255, 0.7); background: linear-gradient(to top, #3b1a8f, #7B2CFF 30%, #FF3D9A 72%, #ffe0f0); }
 .petal-mid { --glow: rgba(255, 61, 154, 0.7); background: linear-gradient(to top, #c2187a, #FF3D9A 35%, #FFB020 75%, #fff4d6); }
 .petal-inner { --glow: rgba(255, 176, 32, 0.8); background: linear-gradient(to top, #ff7a1a, #FFB020 45%, #fffbe8); }
+.lotus-aura {
+  position: absolute; width: calc(380px * var(--u)); height: calc(380px * var(--u)); left: calc(-190px * var(--u)); top: calc(-190px * var(--u));
+  border-radius: 50%; background: radial-gradient(circle, rgba(255, 220, 140, 0.55), rgba(255, 61, 154, 0.25) 40%, transparent 68%);
+  transform: translateZ(-2px); animation: lotus-aura 0.857s ease-out infinite;
+}
 .lotus-core {
   position: absolute; width: calc(56px * var(--u)); height: calc(56px * var(--u)); left: calc(-28px * var(--u)); top: calc(-56px * var(--u));
   border-radius: 50%; transform-origin: 50% 100%; transform: rotateX(-66deg);
   background: radial-gradient(circle at 40% 35%, #fff, #fff4b0 30%, #FFB020 60%, #ff7a1a);
-  box-shadow: 0 0 30px 10px rgba(255, 220, 120, 0.8), 0 0 90px 30px rgba(255, 176, 32, 0.45);
-  animation: lotus-pulse 0.857s ease-out infinite;
+  box-shadow: 0 0 30px 10px rgba(255, 220, 120, 0.8);
 }
 @keyframes lotus-turn { to { transform: rotateX(66deg) rotateZ(360deg); } }
-@keyframes lotus-breathe { from { --open: -8deg; } to { --open: 12deg; } }
-@keyframes lotus-pulse { 0% { scale: 1.12; filter: brightness(1.3); } 50%, 100% { scale: 1; filter: brightness(1); } }
+@keyframes lotus-breathe { from { --open: -6deg; } to { --open: 10deg; } }
+@keyframes lotus-aura { 0% { opacity: 1; } 60%, 100% { opacity: 0.55; } }
 
 /* reflective water in true perspective, rippling on the beat */
 .water-wrap {
-  position: absolute; left: -30%; right: -30%; bottom: 0; height: 32%; perspective: 520px; perspective-origin: 50% 0%; z-index: 1; overflow: hidden;
-  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 45%); mask-image: linear-gradient(to bottom, transparent, #000 45%);
+  position: absolute; left: -30%; right: -30%; bottom: 0; height: 34%; perspective: 520px; perspective-origin: 50% 0%; z-index: 1; overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 40%); mask-image: linear-gradient(to bottom, transparent, #000 40%);
 }
 .water {
   position: absolute; left: 0; right: 0; top: 0; height: 260%; transform-origin: 50% 0%; transform: rotateX(78deg);
   background:
-    radial-gradient(ellipse 30% 22% at 50% 12%, rgba(255, 220, 140, 0.55), transparent 70%),
-    radial-gradient(ellipse 60% 40% at 50% 10%, rgba(41, 240, 224, 0.4), transparent 70%),
+    radial-gradient(ellipse 30% 22% at 50% 12%, rgba(255, 220, 140, 0.45), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 50% 10%, rgba(41, 240, 224, 0.35), transparent 70%),
     linear-gradient(to bottom, rgba(123, 44, 255, 0.55), rgba(12, 6, 32, 0.9) 70%);
-  overflow: hidden;
 }
 .ripple {
   position: absolute; left: 50%; top: 12%; width: 40vmin; aspect-ratio: 1; translate: -50% -50%; border-radius: 50%;
-  border: 3px solid rgba(255, 247, 214, 0.75); box-shadow: 0 0 18px var(--b, #29F0E0), inset 0 0 18px var(--a, #FF3D9A);
+  border: 3px solid rgba(255, 247, 214, 0.7); box-shadow: 0 0 18px var(--b, #29F0E0), inset 0 0 18px var(--a, #FF3D9A);
   animation: ripple-out 3.43s ease-out infinite; animation-delay: calc(var(--k) * -0.857s); opacity: 0;
 }
 .water-shine {
-  position: absolute; inset: -20% 0; opacity: 0.18;
+  position: absolute; left: 0; right: 0; top: 0; height: 60%; opacity: 0.16;
+  -webkit-mask-image: linear-gradient(to bottom, #000 40%, transparent); mask-image: linear-gradient(to bottom, #000 40%, transparent);
   background: repeating-linear-gradient(to bottom, transparent 0 30px, rgba(255, 255, 255, 0.45) 30px 31px, transparent 31px 46px);
   animation: shine-drift 5s linear infinite;
 }
-@keyframes ripple-out { 0% { scale: 0.15; opacity: 0.95; } 100% { scale: 4.5; opacity: 0; } }
+@keyframes ripple-out { 0% { scale: 0.15; opacity: 0.9; } 100% { scale: 4.5; opacity: 0; } }
 @keyframes shine-drift { to { transform: translateY(46px); } }
+
+/* floating on the water: lily pads (some with buds) and diyas, scaled by depth */
+.floaters { position: absolute; left: 0; right: 0; bottom: 0; height: 34%; z-index: 2; }
+.lily, .diya { position: absolute; translate: -50% 0; scale: var(--sc); transform-origin: 50% 100%; }
+.lily { width: 90px; height: 60px; animation: lily-bob 6s ease-in-out infinite; animation-delay: calc(var(--k) * -1.1s); }
+.lily-pad {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 32px; border-radius: 50%;
+  background: conic-gradient(from 160deg at 50% 50%, transparent 0 20deg, #2bd18e 20deg 360deg);
+  box-shadow: inset 0 -4px 0 rgba(12, 74, 58, 0.8), 0 0 18px rgba(182, 255, 59, 0.35);
+  border: 2px solid #0c4a3a;
+}
+.lily-bud {
+  position: absolute; left: 50%; bottom: 14px; width: 18px; height: 30px; margin-left: -9px;
+  border-radius: 50% 50% 50% 50% / 92% 92% 8% 8%; background: linear-gradient(to top, #c2187a, #FF3D9A 50%, #ffe0f0);
+  border: 1.5px solid rgba(12, 6, 32, 0.6); box-shadow: 0 0 14px rgba(255, 61, 154, 0.8);
+}
+.diya { width: 46px; height: 64px; animation: diya-drift 18s ease-in-out infinite alternate; animation-delay: calc(var(--k) * -2.3s); }
+.diya-bowl {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 40%;
+  border-radius: 6px 6px 50% 50% / 6px 6px 100% 100%; background: linear-gradient(to bottom, #ffb46b, #c2410c 60%, #7c2d12);
+  border: 2px solid #0c0620; box-shadow: inset 0 3px 0 rgba(255, 255, 255, 0.35);
+}
+.diya-flame {
+  position: absolute; left: 50%; bottom: 34%; width: 16px; height: 30px; margin-left: -8px; transform-origin: 50% 100%;
+  border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%; background: radial-gradient(ellipse at 50% 70%, #fff, #fff4b0 35%, #FFB020 60%, #ff5a36);
+  box-shadow: 0 0 18px 7px rgba(255, 176, 32, 0.75); animation: diya-flicker 0.6s ease-in-out infinite alternate;
+}
+.diya-glow { position: absolute; left: 50%; bottom: -10px; width: 150px; height: 70px; margin-left: -75px; border-radius: 50%; background: radial-gradient(ellipse, rgba(255, 176, 32, 0.45), transparent 65%); }
+@keyframes lily-bob { 0%, 100% { translate: -50% 0; } 50% { translate: -50% -3px; } }
+@keyframes diya-drift { from { translate: calc(-50% - var(--drift)) 0; } to { translate: calc(-50% + var(--drift)) -3px; } }
+@keyframes diya-flicker { 0% { transform: scale(1, 1) skewX(0deg); } 50% { transform: scale(0.9, 1.1) skewX(-4deg); } 100% { transform: scale(1.06, 0.94) skewX(3deg); } }
+
+/* sky lanterns rising slowly through the night */
+.lanterns { position: absolute; inset: 0; }
+.lanterns span {
+  position: absolute; left: var(--x); top: 100%; width: var(--s); height: calc(var(--s) * 1.3); opacity: 0;
+  border-radius: 42% 42% 22% 22% / 34% 34% 16% 16%;
+  background: radial-gradient(ellipse at 50% 70%, #fff4c2, #FFB020 45%, #ff7a1a 80%, #b4380f);
+  box-shadow: 0 0 calc(var(--s) * 1.1) calc(var(--s) * 0.25) rgba(255, 150, 40, 0.55);
+  animation: lantern-rise var(--d) linear var(--dl) infinite;
+}
+@keyframes lantern-rise {
+  0% { transform: translate3d(0, 0, 0) rotate(-3deg); opacity: 0; }
+  10% { opacity: 0.95; }
+  50% { transform: translate3d(14px, -60vh, 0) rotate(3deg); }
+  85% { opacity: 0.8; }
+  100% { transform: translate3d(-8px, -118vh, 0) rotate(-2deg); opacity: 0; }
+}
 
 /* lotus petals drifting up and tumbling in 3D */
 .petals { position: absolute; inset: 0; z-index: 3; perspective: 700px; }
@@ -946,7 +1005,7 @@ main > .section + .section::before {
 }
 
 /* divine gyroscope halo around the logo */
-.halo { position: absolute; left: 50%; top: 50%; width: 175%; aspect-ratio: 1; translate: -50% -50%; transform-style: preserve-3d; perspective: 900px; pointer-events: none; }
+.halo { position: absolute; left: 50%; top: 50%; width: 175%; aspect-ratio: 1; translate: -50% -50%; transform-style: preserve-3d; pointer-events: none; }
 .halo-ring {
   position: absolute; inset: 0; border-radius: 50%; transform-style: preserve-3d;
   border: 4px solid; border-color: var(--a, #FF3D9A) #FFB020 var(--b, #29F0E0) #fff4b0;
@@ -962,17 +1021,16 @@ main > .section + .section::before {
 @keyframes halo-a { from { transform: rotateX(72deg) rotateZ(0deg); } to { transform: rotateX(72deg) rotateZ(360deg); } }
 @keyframes halo-b { from { transform: rotateY(70deg) rotateZ(0deg); } to { transform: rotateY(70deg) rotateZ(-360deg); } }
 @keyframes halo-c { from { transform: rotateX(55deg) rotateY(-45deg) rotateZ(0deg); } to { transform: rotateX(55deg) rotateY(-45deg) rotateZ(360deg); } }
-.tx-logo { position: relative; display: inline-grid; place-items: center; margin: 0 auto 2.2rem; justify-self: center; width: max-content; }
-.tx-logo .logo3d-lg { margin-bottom: 0; }
 
-/* Our Story: smaller, softer lotus behind the chapters */
-.tx-bg .lotus { --u: 1.1; opacity: 0.85; bottom: 9%; }
-.tx-bg .water-wrap { height: 28%; opacity: 0.8; }
+.tx-title .bloom { margin-bottom: 1.6rem; }
+.tx-bg .water-wrap { height: 26%; opacity: 0.85; }
 
 @media (max-width: 760px) {
-  .lotus { --u: 1; bottom: 10%; }
-  .water-wrap { height: 30%; }
-  .tx-bg .lotus { --u: 0.8; }
+  .bloom { --bsz: 104px; --u: 1.05; }
+  .water-wrap { height: 28%; }
+  .floaters { height: 28%; }
+  .lily, .diya { scale: calc(var(--sc) * 0.75); }
+  .lanterns span:nth-child(n+7) { display: none; }
 }
 
 /* Admin */

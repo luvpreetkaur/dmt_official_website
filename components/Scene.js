@@ -1,8 +1,7 @@
-// The site's living backdrop, drawn in the spirit of the Glow With The Flow
-// flyer and trippy pop paintings: outlined rainbow smoke with all-seeing eyes
-// (pupils follow the mouse), a divine 3D lotus breathing open on a perspective
-// water surface with beat ripples, drifting 3D petals, twinkling stars and
-// fireflies pulled into the portal. Colours follow the page palette.
+// The site's living backdrop: reflective water in true perspective with
+// beat ripples, floating diyas and lily pads, sky lanterns rising slowly,
+// drifting 3D lotus petals, twinkling stars and fireflies pulled into the
+// portal. The lotus itself lives with the logo (see Lotus.js).
 
 const TAU = Math.PI * 2;
 const f = (n) => n.toFixed(1);
@@ -25,74 +24,13 @@ function curl(ex, ey, tangent, r0, dir, turns = 1.7) {
   return { d, cx, cy };
 }
 
-/* ---------- all-seeing eye ---------- */
-function Eye({ x, y, r, k = 0 }) {
-  const w = r * 1.9;
-  const lid = `M${f(x - w)} ${f(y)}Q${f(x)} ${f(y - r * 1.5)} ${f(x + w)} ${f(y)}Q${f(x)} ${f(y + r * 1.5)} ${f(x - w)} ${f(y)}Z`;
-  return (
-    <g className="sc-eye" style={{ '--k': k }}>
-      {[-0.7, -0.35, 0, 0.35, 0.7].map((a, i) => (
-        <line key={i} x1={f(x + Math.sin(a) * w * 0.7)} y1={f(y - r * 0.72)} x2={f(x + Math.sin(a) * w * 1.05)} y2={f(y - r * 1.35)}
-          stroke={INK} strokeWidth={r * 0.16} strokeLinecap="round" />
-      ))}
-      <path d={lid} fill="#fff7d6" stroke={INK} strokeWidth={r * 0.18} />
-      <g className="sc-pupil">
-        {RAINBOW.slice(0, 4).map((c, i) => <circle key={c} cx={x} cy={y} r={r * (0.78 - i * 0.14)} fill={c} />)}
-        <circle cx={x} cy={y} r={r * 0.24} fill={INK} />
-        <circle cx={x - r * 0.18} cy={y - r * 0.2} r={r * 0.1} fill="#fff" />
-      </g>
-    </g>
-  );
-}
+/* ---------- reflective water with floating diyas and lily pads ---------- */
+// Things floating on the water, placed in screen space so they render the
+// same everywhere: [left %, depth 0 (horizon) .. 1 (near), drift px].
+const DIYAS = [[30, 0.2, 40], [66, 0.15, 30], [44, 0.45, -35], [80, 0.4, -25], [16, 0.55, 30], [58, 0.75, 45], [90, 0.7, -30], [8, 0.3, 25]];
+const PADS = [[38, 0.3, 0], [72, 0.55, 1], [24, 0.8, 1], [52, 0.12, 0], [86, 0.18, 0], [12, 0.62, 1]];
 
-/* ---------- rainbow smoke with eyes ---------- */
-function cloud(cx, cy, rx, ry, bumps, phase) {
-  let d = '';
-  for (let i = 0; i <= 160; i++) {
-    const a = (i / 160) * TAU;
-    const k = 1 + 0.13 * Math.abs(Math.sin((bumps * (a + phase)) / 2));
-    d += `${i ? 'L' : 'M'}${f(cx + rx * k * Math.cos(a))} ${f(cy + ry * k * Math.sin(a))}`;
-  }
-  return `${d}Z`;
-}
-
-function Smoke({ side }) {
-  return (
-    <svg className={`sc-smoke sc-smoke-${side}`} viewBox="-20 -20 440 340" aria-hidden="true">
-      {RAINBOW.map((c, i) => {
-        const s = 1 - i * 0.145;
-        return (
-          <path key={c} className="sc-puff" style={{ '--k': i }} fill={c} stroke={INK} strokeWidth="4" strokeLinejoin="round"
-            d={cloud(200 + i * 6, 150 - i * 4, 180 * s, 120 * s, 9 - (i % 3), i * 0.6)} />
-        );
-      })}
-      <Eye x={205} y={142} r={20} k={2} />
-    </svg>
-  );
-}
-
-/* ---------- divine 3D lotus on a perspective water surface ---------- */
-const LAYERS = [
-  { n: 14, tilt: 12, w: 70, h: 150, cls: 'outer', off: 0 },
-  { n: 12, tilt: 34, w: 62, h: 124, cls: 'mid', off: 15 },
-  { n: 9, tilt: 58, w: 50, h: 88, cls: 'inner', off: 0 },
-];
-
-function Lotus() {
-  return (
-    <div className="lotus">
-      <div className="lotus-stage">
-        {LAYERS.flatMap((L) =>
-          Array.from({ length: L.n }, (_, i) => (
-            <span key={`${L.cls}${i}`} className={`petal petal-${L.cls}`}
-              style={{ '--rot': `${(i * 360) / L.n + L.off}deg`, '--tilt': `${L.tilt}deg`, '--w': L.w, '--h': L.h }} />
-          )),
-        )}
-        <span className="lotus-core" />
-      </div>
-    </div>
-  );
-}
+const place = (x, d) => ({ left: `${x}%`, bottom: `${(1 - d) * 62 + 4}%`, '--sc': 0.35 + d * 0.95 });
 
 function Water() {
   return (
@@ -101,6 +39,43 @@ function Water() {
         {[0, 1, 2, 3].map((i) => <span key={i} className="ripple" style={{ '--k': i }} />)}
         <span className="water-shine" />
       </div>
+    </div>
+  );
+}
+
+function Floaters() {
+  return (
+    <div className="floaters">
+      {PADS.map(([x, d, bud], i) => (
+        <span key={`p${i}`} className="lily" style={{ ...place(x, d), '--k': i, zIndex: Math.round(d * 10) }}>
+          <span className="lily-pad" />
+          {bud ? <span className="lily-bud" /> : null}
+        </span>
+      ))}
+      {DIYAS.map(([x, d, drift], i) => (
+        <span key={`d${i}`} className="diya" style={{ ...place(x, d), '--drift': `${drift}px`, '--k': i, zIndex: Math.round(d * 10) + 1 }}>
+          <span className="diya-glow" />
+          <span className="diya-flame" />
+          <span className="diya-bowl" />
+        </span>
+      ))}
+    </div>
+  );
+}
+
+const LANTERNS = Array.from({ length: 10 }, (_, i) => ({
+  x: 6 + ((i * 41) % 88),
+  s: 14 + (i % 4) * 7,
+  d: 26 + (i % 5) * 6,
+  dl: -((i * 4.7) % 30),
+}));
+
+function Lanterns() {
+  return (
+    <div className="lanterns">
+      {LANTERNS.map((l, i) => (
+        <span key={i} style={{ '--x': `${l.x}%`, '--s': `${l.s}px`, '--d': `${l.d}s`, '--dl': `${l.dl}s` }} />
+      ))}
     </div>
   );
 }
@@ -155,15 +130,13 @@ const FIREFLIES = Array.from({ length: 12 }, (_, i) => ({
 
 // portal: fireflies get pulled into the centre (homepage, Our Story);
 // without it they simply rise (events page, where the flyer is the centre).
-// lotus: the 3D lotus blooming on the water (left out where the flyer sits).
-export default function Scene({ portal = true, lotus = true }) {
+export default function Scene({ portal = true }) {
   return (
     <div className={`sc${portal ? ' sc-portal' : ''}`} aria-hidden="true">
       <Sky />
-      <Smoke side="l" />
-      <Smoke side="r" />
+      <Lanterns />
       <Water />
-      {lotus && <Lotus />}
+      <Floaters />
       <Petals />
       <div className="sc-flies">
         {FIREFLIES.map((p, i) => (
