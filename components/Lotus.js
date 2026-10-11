@@ -1,4 +1,5 @@
 // A 3D lotus: three rings of petals that breathe open and slowly turn.
+// public/lotus.png is a snapshot of it used on phones instead of live 3D.
 const LAYERS = [
   { n: 14, tilt: 12, w: 70, h: 150, cls: 'outer', off: 0, z: 0 },
   { n: 12, tilt: 34, w: 62, h: 124, cls: 'mid', off: 15, z: 3 },
@@ -18,6 +19,8 @@ export default function Lotus({ className = '' }) {
         )}
         <span className="lotus-core" />
       </div>
+      {/* phones: a still render of this same lotus (3D planes flicker on mobile GPUs) */}
+      <img className="lotus-img" src="/lotus.png" alt="" />
     </div>
   );
 }

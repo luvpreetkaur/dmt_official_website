@@ -854,7 +854,7 @@ main > .section + .section::before {
 @media (max-width: 760px) {
 }
 @media (prefers-reduced-motion: reduce) {
-  .sc-star, .sc-spiral, .lotus-stage, .lotus-aura, .ripple, .water-shine, .halo-ring, .lanterns span { animation: none; }
+  .sc-star, .sc-spiral, .lotus-stage, .lotus-aura, .lotus-img, .lotus::before, .ripple, .water-shine, .halo-ring, .lanterns span { animation: none; }
   .petals { display: none; }
   .sc-flies { display: none; }
 }
@@ -904,6 +904,33 @@ main > .section + .section::before {
 @keyframes lotus-turn { to { transform: rotateX(66deg) rotateZ(360deg); } }
 @keyframes lotus-breathe { from { --open: -6deg; } to { --open: 10deg; } }
 @keyframes lotus-aura { 0% { opacity: 1; } 60%, 100% { opacity: 0.55; } }
+
+/* phones / touch screens: the still lotus image breathes in 2D instead */
+.lotus-img {
+  display: none; position: absolute; max-width: none; width: calc(319px * var(--u));
+  left: calc(-159.5px * var(--u)); top: calc(-100.5px * var(--u));
+  transform-origin: 50% 75%; filter: drop-shadow(0 0 16px rgba(255, 61, 154, 0.55)) drop-shadow(0 0 40px rgba(255, 176, 32, 0.35));
+  animation: lotus-img-breathe 4.3s ease-in-out infinite alternate;
+}
+@keyframes lotus-img-breathe { from { transform: scale(0.97); } to { transform: scale(1.04); } }
+@media (hover: none), (max-width: 760px) {
+  .lotus-stage { display: none; }
+  .lotus-img { display: block; }
+  .lotus::before {
+    content: ''; position: absolute; width: calc(300px * var(--u)); height: calc(140px * var(--u)); left: calc(-150px * var(--u)); top: calc(-90px * var(--u));
+    border-radius: 50%; background: radial-gradient(ellipse, rgba(255, 220, 140, 0.45), rgba(255, 61, 154, 0.2) 45%, transparent 70%);
+    animation: lotus-aura 0.857s ease-out infinite;
+  }
+  /* halo rings as flat tilted ellipses: same look, no crossing 3D planes */
+  .halo { transform-style: flat; }
+  .halo-r1 { animation-name: halo2d-a; }
+  .halo-r2 { animation-name: halo2d-b; }
+  .halo-r3 { animation-name: halo2d-c; }
+}
+@keyframes halo2d-a { from { transform: rotate(-10deg) scaleY(0.3) rotate(0deg); } to { transform: rotate(-10deg) scaleY(0.3) rotate(360deg); } }
+@keyframes halo2d-b { from { transform: rotate(62deg) scaleY(0.32) rotate(0deg); } to { transform: rotate(62deg) scaleY(0.32) rotate(-360deg); } }
+@keyframes halo2d-c { from { transform: rotate(-58deg) scaleY(0.36) rotate(0deg); } to { transform: rotate(-58deg) scaleY(0.36) rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .lotus-img, .lotus::before { animation: none; } }
 
 /* reflective water in true perspective, rippling on the beat */
 .water-wrap {
