@@ -1,30 +1,24 @@
 import Link from 'next/link';
 import HeroStage from './HeroStage';
-import Mandala from './Mandala';
+import Psyche from './Psyche';
 import Scene from './Scene';
 import Halo from './Halo';
 import Logo from './Logo';
 import { Wavy } from './Transmissions';
 
-// Homepage opener: a tunnel of light pulsing to a trance tempo around the logo.
+// Homepage opener: a live psychedelic shader with neon flowing through it.
 export default function HomeHero({ title, cta }) {
   return (
     <HeroStage className="hh tx-chapter">
       <div className="hh-bg" aria-hidden="true">
-        <div className="tx-kaleido" />
-        <div className="tx-tunnel"><span /><span /><span /><span /></div>
+        <Psyche />
         <div className="ab-sun" />
-        <div className="eh-beams" />
-        <Mandala className="hh-mandala" />
         <div className="hh-spot" />
       </div>
       <Scene />
 
       <div className="hh-content">
         <div className="hh-logo">
-          <span className="hh-beat" aria-hidden="true" />
-          <span className="hh-beat" aria-hidden="true" />
-          <span className="hh-beat" aria-hidden="true" />
           <Halo />
           <Logo size="lg" />
         </div>

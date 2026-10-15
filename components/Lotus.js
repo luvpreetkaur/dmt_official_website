@@ -81,7 +81,7 @@ export default function Lotus({ className = '' }) {
         const s = pose(p.rot, p.tilt + openAt(0), p.h);
         return (
           <span key={i} className={`petal petal-${p.cls}`}
-            style={{ '--w': p.w, '--h': p.h, transform: s.transform, zIndex: s.zIndex }} />
+            style={{ '--w': p.w, '--h': p.h, '--i': i, transform: s.transform, zIndex: s.zIndex }} />
         );
       })}
       <span className="lotus-core" />

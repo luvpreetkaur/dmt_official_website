@@ -1,9 +1,9 @@
 // The site's living backdrop: reflective water in true perspective with
-// beat ripples and a 3D lotus blooming on it, sky lanterns rising slowly,
+// a crowd of dancers made of light on it, sky lanterns rising slowly,
 // drifting 3D lotus petals, twinkling stars and fireflies pulled into the
 // portal.
 
-import Lotus from './Lotus';
+import Dancers from './Dancers';
 
 const TAU = Math.PI * 2;
 const f = (n) => n.toFixed(1);
@@ -31,7 +31,6 @@ function Water() {
   return (
     <div className="water-wrap">
       <div className="water">
-        {[0, 1, 2, 3].map((i) => <span key={i} className="ripple" style={{ '--k': i }} />)}
         <span className="water-shine" />
       </div>
     </div>
@@ -111,7 +110,7 @@ export default function Scene({ portal = true }) {
       <Sky />
       <Lanterns />
       <Water />
-      {portal && <Lotus className="lotus-water" />}
+      {portal && <Dancers />}
       <Petals />
       <div className="sc-flies">
         {FIREFLIES.map((p, i) => (

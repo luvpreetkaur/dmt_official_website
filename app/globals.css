@@ -69,6 +69,11 @@ h1, h2, h3 { font-family: var(--display); line-height: 1.1; margin: 0; }
 .m-spin-a { animation: spin 140s linear infinite; }
 .m-spin-b { animation: spin 100s linear infinite reverse; }
 .m-spin-c { animation: spin 70s linear infinite; }
+/* neon streaks racing along the mandala outlines (homepage) */
+.m-neon { stroke-opacity: 1; filter: drop-shadow(0 0 4px currentColor) drop-shadow(0 0 14px currentColor); }
+.m-neon path { stroke-dasharray: 24 76; stroke-dashoffset: 100; animation: m-neon var(--nd, 3s) linear infinite; animation-delay: var(--dl, 0s); }
+.m-neon path.m-neon-rev { animation-direction: reverse; }
+@keyframes m-neon { 0% { stroke-dashoffset: 100; opacity: 0; } 12% { opacity: 1; } 88% { opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 0; } }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* Event hero: next event as a full-screen 3D stage */
@@ -349,6 +354,7 @@ h1, h2, h3 { font-family: var(--display); line-height: 1.1; margin: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
   .m-spin-a, .m-spin-b, .m-spin-c { animation: none; }
+  .m-neon path { animation: none; stroke-dasharray: none; opacity: 0.35; }
   .eh-light, .eh-beams, .eh-halo, .eh-bob, .eh-glare { animation: none; }
   .eh-card { transition: none; }
   .ab-sun, .ab-title, .ab-hl, .ab-word, .ab-cue { animation: none; }
@@ -745,7 +751,6 @@ main > .section + .section::before {
 .hh { --px: 0; --py: 0; position: relative; min-height: calc(100svh - var(--nav-h)); overflow: hidden; isolation: isolate; display: grid; place-items: center; text-align: center; }
 .hh-bg { position: absolute; inset: 0; z-index: -3; overflow: hidden; }
 .hh-bg .tx-kaleido { opacity: 0.4; animation-duration: 40s; }
-.hh-bg .tx-tunnel span { animation-duration: 6s; }
 .hh-mandala {
   position: absolute; left: 50%; top: 50%; width: min(130vmin, 1150px); translate: -50% -50%; opacity: 0.5;
   transform: translate3d(calc(var(--px) * 16px), calc(var(--py) * 16px), 0); transition: transform 0.6s cubic-bezier(.2, .7, .2, 1);
@@ -880,6 +885,7 @@ main > .section + .section::before {
 @media (max-width: 760px) {
 }
 @media (prefers-reduced-motion: reduce) {
+  .petal, .lotus-core, .lotus-core::before,
   .sc-star, .sc-spiral, .lotus-aura, .ripple, .water-shine, .halo-ring, .lanterns span { animation: none; }
   .petals { display: none; }
   .sc-flies { display: none; }
@@ -895,28 +901,52 @@ main > .section + .section::before {
 .hh-logo .logo3d-lg { margin-bottom: 0; --sz: clamp(180px, 22vw, 250px); animation: hh-thump 0.857s ease-out infinite; }
 
 .lotus { width: 0; height: 0; isolation: isolate; }
+/* The lotus is drawn in light: dark glass petals with neon edges and contour
+   lines rippling out from its heart, screened onto the backdrop so the
+   psychedelic pattern shows through it and only the light remains. */
+@property --o { syntax: '<number>'; inherits: false; initial-value: 0; }
+.lotus { mix-blend-mode: screen; }
 .petal {
-  position: absolute; width: calc(var(--w) * 1px * var(--u)); height: calc(var(--h) * 1px * var(--u));
-  left: calc(var(--w) * -0.5px * var(--u)); top: calc(var(--h) * -1px * var(--u));
+  --H: calc(var(--h) * 1px * var(--u));
+  --P: calc(11px * var(--u));
+  position: absolute; width: calc(var(--w) * 1px * var(--u)); height: var(--H);
+  left: calc(var(--w) * -0.5px * var(--u)); top: calc(var(--H) * -1);
   transform-origin: 50% 100%;
-  border-radius: 50% 50% 50% 50% / 92% 92% 8% 8%; border: 2px solid rgba(12, 6, 32, 0.5);
-  box-shadow: inset 0 0 18px rgba(255, 255, 255, 0.55), 0 0 22px var(--glow, rgba(255, 61, 154, 0.6));
+  border-radius: 50% 50% 50% 50% / 92% 92% 8% 8%; border: 1.5px solid var(--c2);
+  background:
+    linear-gradient(to right, transparent 47%, rgba(255, 255, 255, 0.7) 50%, transparent 53%),
+    repeating-radial-gradient(ellipse 62% 88% at 50% 100%,
+      transparent 0, transparent calc(var(--o) * var(--P)), var(--c1) calc(var(--o) * var(--P) + 1.5px), transparent calc(var(--o) * var(--P) + 3px), transparent calc(var(--P) + 3px)),
+    radial-gradient(ellipse 70% 70% at 50% 100%, var(--c0), transparent 70%),
+    #05010c;
+  box-shadow: inset 0 0 calc(12px * var(--u)) var(--c1), 0 0 16px var(--c1);
+  animation: petal-rings 1.714s linear infinite; animation-delay: calc(var(--i) * -0.11s);
 }
-.petal-outer { --glow: rgba(123, 44, 255, 0.7); background: linear-gradient(to top, #3b1a8f, #7B2CFF 30%, #FF3D9A 72%, #ffe0f0); }
-.petal-mid { --glow: rgba(255, 61, 154, 0.7); background: linear-gradient(to top, #c2187a, #FF3D9A 35%, #FFB020 75%, #fff4d6); }
-.petal-inner { --glow: rgba(255, 176, 32, 0.8); background: linear-gradient(to top, #ff7a1a, #FFB020 45%, #fffbe8); }
+@keyframes petal-rings { from { --o: 0; } to { --o: 1; } }
+.petal-outer { --c0: rgba(123, 44, 255, 0.45); --c1: #a35cff; --c2: #FF3D9A; }
+.petal-mid { --c0: rgba(255, 61, 154, 0.45); --c1: #FF3D9A; --c2: #FFB020; }
+.petal-inner { --c0: rgba(41, 240, 224, 0.4); --c1: #29F0E0; --c2: #fff4d6; }
 .lotus-aura {
   position: absolute; z-index: 0; width: calc(400px * var(--u)); height: calc(180px * var(--u)); left: calc(-200px * var(--u)); top: calc(-110px * var(--u));
-  border-radius: 50%; background: radial-gradient(ellipse, rgba(255, 220, 140, 0.55), rgba(255, 61, 154, 0.25) 40%, transparent 68%);
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(255, 61, 154, 0.5), rgba(123, 44, 255, 0.3) 35%, rgba(41, 240, 224, 0.12) 55%, transparent 70%);
   animation: lotus-aura 0.857s ease-out infinite;
 }
 .lotus-core {
-  position: absolute; width: calc(56px * var(--u)); height: calc(56px * var(--u)); left: calc(-28px * var(--u)); top: calc(-56px * var(--u));
-  border-radius: 50%; z-index: 1000;
-  background: radial-gradient(circle at 40% 35%, #fff, #fff4b0 30%, #FFB020 60%, #ff7a1a);
-  box-shadow: 0 0 30px 10px rgba(255, 220, 120, 0.8);
+  position: absolute; width: calc(46px * var(--u)); height: calc(46px * var(--u)); left: calc(-23px * var(--u)); top: calc(-50px * var(--u));
+  border-radius: 50%; z-index: 1000; overflow: hidden;
+  box-shadow: 0 0 24px 8px rgba(255, 244, 214, 0.75), 0 0 60px 20px rgba(255, 61, 154, 0.45);
+  animation: core-beat 0.857s ease-out infinite;
+}
+.lotus-core::before {
+  content: ''; position: absolute; inset: -20%;
+  background:
+    radial-gradient(circle, #fff 0 22%, rgba(255, 244, 214, 0.6) 40%, transparent 62%),
+    repeating-conic-gradient(#FF3D9A 0 15deg, #FFB020 15deg 30deg, #29F0E0 30deg 45deg, #7B2CFF 45deg 60deg);
+  animation: spin 3.428s linear infinite;
 }
 @keyframes lotus-aura { 0% { opacity: 1; } 60%, 100% { opacity: 0.55; } }
+@keyframes core-beat { 0% { scale: 1.15; } 40%, 100% { scale: 1; } }
 
 
 /* reflective water in true perspective, rippling on the beat */
@@ -1146,3 +1176,10 @@ main > .section + .section::before {
 .login { max-width: 380px; margin: 12vh auto; }
 .setup { max-width: 640px; margin: 10vh auto; padding: 0 1rem; }
 .setup code { background: var(--deep); padding: 0.1rem 0.4rem; border-radius: 4px; }
+
+/* ---------- Homepage: live psychedelic shader ---------- */
+.psyche { position: absolute; inset: 0; width: 100%; height: 100%; display: block; background: var(--void); }
+
+/* the dancefloor crowd standing on the water (Scene) */
+.dancers { position: absolute; left: 0; bottom: 0; width: 100%; height: 52%; z-index: 2; pointer-events: none; display: block; }
+.tx-bg .dancers { height: 42%; opacity: 0.9; }

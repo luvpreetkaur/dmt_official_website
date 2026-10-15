@@ -25,7 +25,6 @@ export default function Transmissions() {
       {TRANSMISSIONS.map((t, ti) => (
         <section key={t.id} className={`tx-chapter tx-${t.tone}`} aria-labelledby={`tx-${t.id}`}>
           <div className="tx-bg" aria-hidden="true">
-            <div className="tx-kaleido" />
             <div className="tx-tunnel"><span /><span /><span /><span /></div>
             <Mandala className="tx-mandala" />
             <Scene />
